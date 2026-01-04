@@ -14,14 +14,8 @@ ScrollStamp v1 uses scroll percentage-based bookmarking to help you navigate len
 
 ## 🚀 Supported Platforms
 
-| Platform | URL |
-|----------|-----|
-| ChatGPT | chat.openai.com / chatgpt.com |
-| Claude | claude.ai |
-| Google Gemini | gemini.google.com |
-| Perplexity | perplexity.ai |
-| Grok | grok.x.ai |
-| DeepSeek | chat.deepseek.com |
+Supports on every website except message based LLm's like chat gpt grok for those you could use
+V2
 
 ---
 
@@ -56,6 +50,7 @@ scrollstamp-v1/
 ### From Source (Developer Mode)
 
 1. **Download** — Clone or download this repository
+
    ```bash
    git clone https://github.com/yourusername/scrollstamp.git
    ```
@@ -93,10 +88,10 @@ scrollstamp-v1/
 
 ### Managing Bookmarks
 
-| Action | How To |
-|--------|--------|
-| Delete Single | Click the **✕** button on any bookmark |
-| Clear All | Click "Clear All" at the bottom of the popup |
+| Action        | How To                                       |
+| ------------- | -------------------------------------------- |
+| Delete Single | Click the **✕** button on any bookmark       |
+| Clear All     | Click "Clear All" at the bottom of the popup |
 
 ---
 
@@ -119,12 +114,12 @@ const scrollPosition = (scrollPercentage / 100) * scrollHeight;
 
 ## ⚠️ Known Limitations
 
-| Limitation | Description |
-|------------|-------------|
-| Dynamic Content | Position may shift if page content changes after bookmarking |
-| Lazy Loading | Pages with lazy-loaded content may not restore precisely |
-| Single Page Apps | URL changes without full page reload may affect accuracy |
-| No Message Context | Cannot identify specific messages, only scroll positions |
+| Limitation         | Description                                                  |
+| ------------------ | ------------------------------------------------------------ |
+| Dynamic Content    | Position may shift if page content changes after bookmarking |
+| Lazy Loading       | Pages with lazy-loaded content may not restore precisely     |
+| Single Page Apps   | URL changes without full page reload may affect accuracy     |
+| No Message Context | Cannot identify specific messages, only scroll positions     |
 
 ---
 
@@ -165,13 +160,13 @@ const scrollPosition = (scrollPercentage / 100) * scrollHeight;
 
 **Considering upgrading to v2?** ScrollStamp v2 introduces message-based bookmarking for more precise navigation:
 
-| Feature | v1 | v2 |
-|---------|----|----|
-| Bookmark Type | Scroll Position | Message-Based |
-| Precision | Good | Excellent |
-| Message Preview | ❌ | ✅ |
-| Visual Feedback | Basic | Enhanced |
-| Content Change Resilience | Low | High |
+| Feature                   | v1              | v2            |
+| ------------------------- | --------------- | ------------- |
+| Bookmark Type             | Scroll Position | Message-Based |
+| Precision                 | Good            | Excellent     |
+| Message Preview           | ❌              | ✅            |
+| Visual Feedback           | Basic           | Enhanced      |
+| Content Change Resilience | Low             | High          |
 
 ---
 
