@@ -129,32 +129,38 @@ function createStampElement(stamp) {
   const titleInput = li.querySelector('.stamp-title-input');
   const editBtn = li.querySelector('.stamp-edit-btn');
   
-  // Title input is readonly by default, only editable via pencil click
+  // Title input is readonly by default - ONLY editable via pencil icon
   titleInput.readOnly = true;
+  titleInput.style.cursor = 'default';
+  titleInput.style.pointerEvents = 'none'; // Prevent any text selection/interaction
   
-  // Handle title editing - only via pencil icon
+  // Handle title editing - ONLY via pencil icon click
   editBtn.addEventListener('click', (e) => {
     e.stopPropagation();
+    e.preventDefault();
     titleInput.readOnly = false;
+    titleInput.style.cursor = 'text';
+    titleInput.style.pointerEvents = 'auto';
     titleInput.focus();
     titleInput.select();
   });
   
-  titleInput.addEventListener('click', (e) => {
-    e.stopPropagation();
-    // Don't enable editing on click, just prevent navigation
-  });
-  
+  // Save on blur and restore readonly state
   titleInput.addEventListener('blur', () => {
     titleInput.readOnly = true;
+    titleInput.style.cursor = 'default';
+    titleInput.style.pointerEvents = 'none';
     updateStampTitle(stamp, titleInput.value);
   });
   
+  // Handle keyboard shortcuts when editing
   titleInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       titleInput.blur();
     }
     if (e.key === 'Escape') {
+      e.preventDefault();
       titleInput.value = stamp.title || stamp.preview || 'No preview';
       titleInput.blur();
     }

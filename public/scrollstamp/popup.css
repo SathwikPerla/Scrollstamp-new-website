@@ -142,7 +142,6 @@ body {
 }
 
 .stamp-title-input {
-  cursor: default;
   flex: 1;
   font-size: 13px;
   color: #d0d0d0;
@@ -153,20 +152,25 @@ body {
   line-height: 1.3;
   font-family: inherit;
   min-width: 0;
+  cursor: default;
+  pointer-events: none;
+  user-select: none;
 }
 
-.stamp-title-input:not([readonly]):hover,
+/* Only show editable styles when NOT readonly (after pencil click) */
 .stamp-title-input:not([readonly]) {
   cursor: text;
-  border-color: #3a3a5a;
-  background: rgba(255, 255, 255, 0.05);
+  pointer-events: auto;
+  user-select: text;
+  border-color: #6366f1;
+  background: rgba(99, 102, 241, 0.1);
+  color: #ffffff;
 }
 
 .stamp-title-input:focus {
   outline: none;
   border-color: #6366f1;
-  cursor: text;
-  background: rgba(99, 102, 241, 0.1);
+  background: rgba(99, 102, 241, 0.15);
   color: #ffffff;
 }
 

@@ -176,32 +176,45 @@
   // ============================================
 
   function getScrollPercentage() {
-    // For PDFs, try to get scroll from the PDF embed/viewer
+    // For PDFs, Chrome's built-in viewer uses a plugin element
     if (isPDF) {
+      // Try to find the PDF viewer's internal scroll container
+      const pdfViewer = document.querySelector('#viewer');
+      const pdfContainer = document.querySelector('#viewerContainer');
       const embed = document.querySelector('embed[type="application/pdf"]');
-      if (embed) {
-        // PDFs in embed don't expose scroll, use page scroll as fallback
-        const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
-        const scrollHeight = Math.max(
-          document.documentElement.scrollHeight,
-          document.body.scrollHeight,
-          embed.offsetHeight || 0
-        ) - window.innerHeight;
-        if (scrollHeight <= 0) return 0;
-        return Math.round((scrollTop / scrollHeight) * 100);
+      const pdfPlugin = document.querySelector('embed, object');
+      
+      // Method 1: Check for PDF.js viewer (used by many sites and Firefox)
+      if (pdfViewer && pdfContainer) {
+        const scrollTop = pdfContainer.scrollTop;
+        const scrollHeight = pdfContainer.scrollHeight - pdfContainer.clientHeight;
+        if (scrollHeight > 0) {
+          return Math.round((scrollTop / scrollHeight) * 100);
+        }
       }
-      // For Chrome's built-in PDF viewer, the whole page is the PDF
-      const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
-      const scrollHeight = Math.max(
-        document.documentElement.scrollHeight,
-        document.body.scrollHeight
-      ) - window.innerHeight;
-      if (scrollHeight <= 0) return 0;
+      
+      // Method 2: For Chrome's native PDF viewer, use page scroll
+      // The plugin takes over the whole page, so window scroll should work
+      const scrollTop = window.pageYOffset || window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      const docHeight = Math.max(
+        document.body.scrollHeight || 0,
+        document.documentElement.scrollHeight || 0,
+        document.body.offsetHeight || 0,
+        document.documentElement.offsetHeight || 0
+      );
+      const scrollHeight = docHeight - window.innerHeight;
+      
+      // If we can't calculate scroll (single-page PDF or plugin blocking), use 0
+      if (scrollHeight <= 0) {
+        // Try to estimate based on visible content
+        return 0;
+      }
+      
       return Math.round((scrollTop / scrollHeight) * 100);
     }
     
     // Regular pages
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
     const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
     if (scrollHeight <= 0) return 0;
     return Math.round((scrollTop / scrollHeight) * 100);
@@ -232,11 +245,22 @@
     const scrollPercent = getScrollPercentage();
     const preview = getContextPreview();
     
+    // Get the actual scroll position from various sources
+    let scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    
+    // For PDFs, also try the PDF container
+    if (isPDF) {
+      const pdfContainer = document.querySelector('#viewerContainer');
+      if (pdfContainer) {
+        scrollY = pdfContainer.scrollTop;
+      }
+    }
+    
     return {
       id: `scroll_${scrollPercent}_${Date.now().toString(36)}`,
       type: isPDF ? 'pdf' : 'scroll', // v1 type with PDF distinction
       scrollPercent: scrollPercent,
-      scrollY: window.scrollY,
+      scrollY: scrollY,
       preview: preview,
       pageTitle: getPageTitle(),
       title: '', // User-editable title (empty by default)
@@ -248,7 +272,20 @@
   }
 
   function scrollToPosition(stamp) {
-    if (stamp.scrollY !== undefined) {
+    // For PDFs, try PDF.js container first
+    if (stamp.type === 'pdf') {
+      const pdfContainer = document.querySelector('#viewerContainer');
+      if (pdfContainer && stamp.scrollY !== undefined) {
+        pdfContainer.scrollTo({
+          top: stamp.scrollY,
+          behavior: 'smooth'
+        });
+        return true;
+      }
+    }
+    
+    // Try scrollY first for exact position
+    if (stamp.scrollY !== undefined && stamp.scrollY > 0) {
       window.scrollTo({
         top: stamp.scrollY,
         behavior: 'smooth'
@@ -257,7 +294,7 @@
     }
     
     // Fallback to percentage-based scroll
-    if (stamp.scrollPercent !== undefined) {
+    if (stamp.scrollPercent !== undefined && stamp.scrollPercent > 0) {
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       const targetY = (stamp.scrollPercent / 100) * scrollHeight;
       window.scrollTo({
