@@ -160,7 +160,7 @@ function createStampElement(stamp) {
       </div>
       <div class="stamp-meta">
         <span class="stamp-type ${typeClass}">${typeLabel}</span>
-        <span class="stamp-hostname" title="${hostname}">${shortHostname}</span>
+        <span class="stamp-hostname" title="${hostname}" style="pointer-events: none; cursor: default; user-select: none;">${shortHostname}</span>
         <span>${timeAgo}</span>
       </div>
     </div>
