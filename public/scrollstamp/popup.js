@@ -129,18 +129,24 @@ function createStampElement(stamp) {
   const titleInput = li.querySelector('.stamp-title-input');
   const editBtn = li.querySelector('.stamp-edit-btn');
   
-  // Handle title editing
+  // Title input is readonly by default, only editable via pencil click
+  titleInput.readOnly = true;
+  
+  // Handle title editing - only via pencil icon
   editBtn.addEventListener('click', (e) => {
     e.stopPropagation();
+    titleInput.readOnly = false;
     titleInput.focus();
     titleInput.select();
   });
   
   titleInput.addEventListener('click', (e) => {
     e.stopPropagation();
+    // Don't enable editing on click, just prevent navigation
   });
   
   titleInput.addEventListener('blur', () => {
+    titleInput.readOnly = true;
     updateStampTitle(stamp, titleInput.value);
   });
   
