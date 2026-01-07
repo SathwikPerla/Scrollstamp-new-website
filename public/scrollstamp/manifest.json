@@ -4,6 +4,11 @@
   "version": "2.1.0",
   "description": "Smart bookmarking - Message-based for AI chats, scroll-based for everything else",
   "permissions": ["storage", "activeTab"],
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -14,6 +19,11 @@
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "ScrollStamp"
+    "default_title": "ScrollStamp",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
   }
 }
