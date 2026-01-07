@@ -194,10 +194,13 @@ body {
   padding: 10px 16px;
   border-top: 1px solid #2a2a4a;
   background: #0f0f1a;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .btn-clear {
-  width: 100%;
+  flex: 1;
   padding: 10px;
   background: transparent;
   border: 1px solid #3a3a5a;
@@ -212,6 +215,24 @@ body {
   background: rgba(220, 38, 38, 0.1);
   border-color: #dc2626;
   color: #ef4444;
+}
+
+.github-link {
+  padding: 10px 12px;
+  background: transparent;
+  border: 1px solid #3a3a5a;
+  border-radius: 6px;
+  color: #fbbf24;
+  font-size: 12px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.github-link:hover {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: #fbbf24;
+  color: #fcd34d;
 }
 
 /* Scrollbar */
