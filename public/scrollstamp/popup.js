@@ -11,36 +11,77 @@ async function init() {
 async function detectCurrentMode() {
   const modeBadge = document.getElementById('mode-badge');
   const emptyHint = document.getElementById('empty-hint');
-  
+  const modeNote = document.getElementById('mode-note');
+
+  const hideNote = () => {
+    if (!modeNote) return;
+    modeNote.textContent = '';
+    modeNote.style.display = 'none';
+  };
+
+  const showNote = (text) => {
+    if (!modeNote) return;
+    modeNote.textContent = text;
+    modeNote.style.display = 'block';
+  };
+
+  const isLikelyPdfUrl = (url = '') => {
+    const u = String(url).toLowerCase();
+    return (
+      u.endsWith('.pdf') ||
+      u.includes('.pdf#') ||
+      u.includes('.pdf?') ||
+      (u.startsWith('file:') && u.includes('.pdf')) ||
+      // Chrome's built-in PDF viewer runs in an extension page
+      u.includes('chrome-extension://mhjfbmdgcfjbbpaeojofohoefgiehjai')
+    );
+  };
+
+  const setScrollMode = () => {
+    hideNote();
+    modeBadge.textContent = 'Scroll';
+    modeBadge.className = 'mode-badge scroll-mode';
+    emptyHint.textContent = 'Click 📌 to bookmark scroll positions';
+  };
+
+  const setAiMode = (platform) => {
+    hideNote();
+    modeBadge.textContent = platform;
+    modeBadge.className = 'mode-badge ai-mode';
+    emptyHint.textContent = 'Click 📌 to bookmark AI messages';
+  };
+
+  const setPdfUnsupportedMode = () => {
+    modeBadge.textContent = 'PDF';
+    modeBadge.className = 'mode-badge pdf-mode';
+    emptyHint.textContent = 'PDFs are not supported in ScrollStamp';
+    showNote('PDFs opened in Chrome (downloads / built-in viewer) can’t be bookmarked. Open a normal webpage or an AI chat instead.');
+  };
+
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const likelyPdf = isLikelyPdfUrl(tab?.url);
+
     if (tab?.id) {
       chrome.tabs.sendMessage(tab.id, { action: 'getMode' }, (response) => {
         if (chrome.runtime.lastError || !response) {
-          modeBadge.textContent = 'Scroll';
-          modeBadge.className = 'mode-badge scroll-mode';
-          emptyHint.textContent = 'Click 📌 to bookmark scroll positions';
+          if (likelyPdf) setPdfUnsupportedMode();
+          else setScrollMode();
           return;
         }
-        
+
         if (response.isAIChat) {
-          modeBadge.textContent = response.platform;
-          modeBadge.className = 'mode-badge ai-mode';
-          emptyHint.textContent = 'Click 📌 to bookmark AI messages';
+          setAiMode(response.platform);
         } else if (response.isPDF) {
-          modeBadge.textContent = 'PDF';
-          modeBadge.className = 'mode-badge pdf-mode';
-          emptyHint.textContent = 'Click 📌 to bookmark PDF positions';
+          // We currently treat PDFs as unsupported to avoid broken stamps.
+          setPdfUnsupportedMode();
         } else {
-          modeBadge.textContent = 'Scroll';
-          modeBadge.className = 'mode-badge scroll-mode';
-          emptyHint.textContent = 'Click 📌 to bookmark scroll positions';
+          setScrollMode();
         }
       });
     }
   } catch (e) {
-    modeBadge.textContent = 'Scroll';
-    modeBadge.className = 'mode-badge scroll-mode';
+    setScrollMode();
   }
 }
 

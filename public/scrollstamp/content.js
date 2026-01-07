@@ -68,7 +68,7 @@
   let currentPlatform = null;
   let isAIChat = false;
   let isPDF = false;
-
+  let isPDFSupported = true;
   // ============================================
   // V2: MESSAGE-BASED BOOKMARKING (AI Chats)
   // ============================================
@@ -272,38 +272,38 @@
   }
 
   function scrollToPosition(stamp) {
-    // For PDFs, try PDF.js container first
+    // PDFs (when accessible) may use PDF.js container
     if (stamp.type === 'pdf') {
       const pdfContainer = document.querySelector('#viewerContainer');
-      if (pdfContainer && stamp.scrollY !== undefined) {
+      if (pdfContainer && typeof stamp.scrollY === 'number') {
         pdfContainer.scrollTo({
-          top: stamp.scrollY,
+          top: Math.max(0, stamp.scrollY),
           behavior: 'smooth'
         });
         return true;
       }
     }
-    
-    // Try scrollY first for exact position
-    if (stamp.scrollY !== undefined && stamp.scrollY > 0) {
+
+    // Try scrollY first for exact position (0 is valid)
+    if (typeof stamp.scrollY === 'number') {
       window.scrollTo({
-        top: stamp.scrollY,
+        top: Math.max(0, stamp.scrollY),
         behavior: 'smooth'
       });
       return true;
     }
-    
-    // Fallback to percentage-based scroll
-    if (stamp.scrollPercent !== undefined && stamp.scrollPercent > 0) {
+
+    // Fallback to percentage-based scroll (0 is valid)
+    if (typeof stamp.scrollPercent === 'number') {
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const targetY = (stamp.scrollPercent / 100) * scrollHeight;
+      const targetY = (stamp.scrollPercent / 100) * Math.max(0, scrollHeight);
       window.scrollTo({
-        top: targetY,
+        top: Math.max(0, targetY),
         behavior: 'smooth'
       });
       return true;
     }
-    
+
     return false;
   }
 
@@ -365,17 +365,35 @@
   // UI & INITIALIZATION
   // ============================================
 
+  function getPinTitle() {
+    return isAIChat
+      ? 'Bookmark this AI message'
+      : (isPDF
+          ? (isPDFSupported ? 'Bookmark this PDF position' : 'PDFs not supported in ScrollStamp')
+          : 'Bookmark this scroll position');
+  }
+
   function createFloatingButton() {
-    if (floatingBtn) return;
+    if (floatingBtn) {
+      floatingBtn.title = getPinTitle();
+      return;
+    }
 
     floatingBtn = document.createElement('div');
     floatingBtn.id = 'scrollstamp-pin';
     floatingBtn.innerHTML = '📌';
-    floatingBtn.title = isAIChat ? 'Bookmark this AI message' : (isPDF ? 'Bookmark this PDF position' : 'Bookmark this scroll position');
+    floatingBtn.title = getPinTitle();
     
     floatingBtn.addEventListener('click', async () => {
       let stamp;
       let saved;
+
+      // PDFs opened in Chrome's viewer / local downloads are not reliably scriptable.
+      // We explicitly mark them as unsupported to avoid broken bookmarks.
+      if (isPDF && !isPDFSupported) {
+        showToast('PDFs are not supported in ScrollStamp');
+        return;
+      }
 
       if (isAIChat) {
         // V2: Message-based bookmarking
@@ -451,10 +469,11 @@
     }
     
     if (request.action === 'getMode') {
-      sendResponse({ 
-        isAIChat: isAIChat, 
+      sendResponse({
+        isAIChat: isAIChat,
         isPDF: isPDF,
-        platform: currentPlatform 
+        pdfSupported: isPDFSupported,
+        platform: currentPlatform
       });
       return true;
     }
@@ -481,6 +500,7 @@
     currentPlatform = detectAIPlatform();
     isAIChat = currentPlatform !== null;
     isPDF = isPDFPage();
+    isPDFSupported = !isPDF;
     
     createFloatingButton();
     
