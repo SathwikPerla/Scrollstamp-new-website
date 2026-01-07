@@ -176,6 +176,31 @@
   // ============================================
 
   function getScrollPercentage() {
+    // For PDFs, try to get scroll from the PDF embed/viewer
+    if (isPDF) {
+      const embed = document.querySelector('embed[type="application/pdf"]');
+      if (embed) {
+        // PDFs in embed don't expose scroll, use page scroll as fallback
+        const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = Math.max(
+          document.documentElement.scrollHeight,
+          document.body.scrollHeight,
+          embed.offsetHeight || 0
+        ) - window.innerHeight;
+        if (scrollHeight <= 0) return 0;
+        return Math.round((scrollTop / scrollHeight) * 100);
+      }
+      // For Chrome's built-in PDF viewer, the whole page is the PDF
+      const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = Math.max(
+        document.documentElement.scrollHeight,
+        document.body.scrollHeight
+      ) - window.innerHeight;
+      if (scrollHeight <= 0) return 0;
+      return Math.round((scrollTop / scrollHeight) * 100);
+    }
+    
+    // Regular pages
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
     if (scrollHeight <= 0) return 0;
