@@ -237,27 +237,33 @@ async function scrollToStamp(stamp) {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   
   if (!tab) return;
-  
-  // Check if we need to navigate to the page first
-  const currentPath = new URL(tab.url).pathname;
-  const stampPath = new URL(stamp.url).pathname;
-  
-  if (currentPath !== stampPath) {
-    chrome.tabs.update(tab.id, { url: stamp.url }, () => {
-      setTimeout(() => {
-        chrome.tabs.sendMessage(tab.id, {
-          action: 'scrollTo',
-          stamp: stamp
-        });
-      }, 2000);
-    });
-  } else {
-    chrome.tabs.sendMessage(tab.id, {
-      action: 'scrollTo',
-      stamp: stamp
-    });
+
+  // Normalize URLs for comparison (same origin + path)
+  let currentOrigin, stampOrigin, currentPath, stampPath;
+  try {
+    const currentUrl = new URL(tab.url);
+    const targetUrl = new URL(stamp.url);
+    currentOrigin = currentUrl.origin;
+    stampOrigin = targetUrl.origin;
+    currentPath = currentUrl.pathname;
+    stampPath = targetUrl.pathname;
+  } catch {
+    // Invalid URL, do nothing
+    return;
   }
-  
+
+  // Only allow scrolling if we're on the SAME origin+path
+  if (currentOrigin !== stampOrigin || currentPath !== stampPath) {
+    // Show a toast-like alert instead of navigating
+    alert('This bookmark is for a different page. Please navigate there first to use it.');
+    return;
+  }
+
+  chrome.tabs.sendMessage(tab.id, {
+    action: 'scrollTo',
+    stamp: stamp
+  });
+
   window.close();
 }
 
