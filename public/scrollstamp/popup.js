@@ -175,7 +175,7 @@ function createStampElement(stamp) {
       </div>
       <div class="stamp-meta">
         <span class="stamp-type ${typeClass}">${typeLabel}</span>
-        <span class="stamp-hostname" title="${hostname}" style="pointer-events: none; cursor: default; user-select: none;">${shortHostname}</span>
+        <span class="stamp-hostname" title="${hostname}" style="cursor: default; user-select: none;">${shortHostname}</span>
         <span>${timeAgo}</span>
       </div>
     </div>
@@ -184,6 +184,15 @@ function createStampElement(stamp) {
   
   const titleInput = li.querySelector('.stamp-title-input');
   const editBtn = li.querySelector('.stamp-edit-btn');
+  const hostnameEl = li.querySelector('.stamp-hostname');
+
+  // Hostname should be readable-only and must NOT trigger navigation/scroll
+  if (hostnameEl) {
+    hostnameEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+    });
+  }
   
   // Title input is readonly by default - ONLY editable via pencil icon
   titleInput.readOnly = true;
@@ -225,7 +234,8 @@ function createStampElement(stamp) {
   li.addEventListener('click', (e) => {
     if (e.target.classList.contains('stamp-delete') || 
         e.target.classList.contains('stamp-title-input') ||
-        e.target.classList.contains('stamp-edit-btn')) return;
+        e.target.classList.contains('stamp-edit-btn') ||
+        e.target.classList.contains('stamp-hostname')) return;
     scrollToStamp(stamp);
   });
   
@@ -258,36 +268,44 @@ async function updateStampTitle(stamp, newTitle) {
   }
 }
 
+function sendScrollMessageWithRetry(tabId, stamp, remainingAttempts = 10) {
+  return new Promise((resolve) => {
+    chrome.tabs.sendMessage(tabId, { action: 'scrollTo', stamp }, (response) => {
+      if (!chrome.runtime.lastError && response?.success) {
+        resolve(true);
+        return;
+      }
+
+      if (remainingAttempts <= 0) {
+        resolve(false);
+        return;
+      }
+
+      setTimeout(async () => {
+        resolve(await sendScrollMessageWithRetry(tabId, stamp, remainingAttempts - 1));
+      }, 400);
+    });
+  });
+}
+
 async function scrollToStamp(stamp) {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  
-  if (!tab) return;
+  if (!tab?.id || !tab.url || !stamp?.url) return;
 
-  // Normalize URLs for comparison (same origin + path)
-  let currentOrigin, stampOrigin, currentPath, stampPath;
-  try {
-    const currentUrl = new URL(tab.url);
-    const targetUrl = new URL(stamp.url);
-    currentOrigin = currentUrl.origin;
-    stampOrigin = targetUrl.origin;
-    currentPath = currentUrl.pathname;
-    stampPath = targetUrl.pathname;
-  } catch {
-    // Invalid URL, do nothing
+  // Always scroll in the saved page; if we're not there, navigate first.
+  const sameUrl = tab.url === stamp.url;
+
+  if (!sameUrl) {
+    chrome.tabs.update(tab.id, { url: stamp.url }, async () => {
+      // Wait for content script to be ready on the new page
+      const ok = await sendScrollMessageWithRetry(tab.id, stamp, 12);
+      if (ok) window.close();
+    });
     return;
   }
 
-  // Only allow scrolling if we're on the SAME origin+path - do nothing otherwise
-  if (currentOrigin !== stampOrigin || currentPath !== stampPath) {
-    return;
-  }
-
-  chrome.tabs.sendMessage(tab.id, {
-    action: 'scrollTo',
-    stamp: stamp
-  });
-
-  window.close();
+  const ok = await sendScrollMessageWithRetry(tab.id, stamp, 3);
+  if (ok) window.close();
 }
 
 async function deleteStamp(stamp) {

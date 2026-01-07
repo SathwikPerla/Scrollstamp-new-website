@@ -243,7 +243,6 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 120px;
-  pointer-events: none;
   cursor: default;
   user-select: none;
 }
