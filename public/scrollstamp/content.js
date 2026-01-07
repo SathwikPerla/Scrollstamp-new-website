@@ -311,26 +311,50 @@
   // SHARED UTILITIES
   // ============================================
 
+  // Check if extension context is still valid
+  function isExtensionContextValid() {
+    try {
+      return chrome.runtime && !!chrome.runtime.id;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function getStorageKey() {
     return `scrollstamp_${btoa(window.location.pathname).substring(0, 20)}`;
   }
 
   async function saveStamp(stamp) {
+    if (!isExtensionContextValid()) {
+      console.log('ScrollStamp: Extension context invalidated, please refresh the page');
+      return false;
+    }
+    
     const storageKey = getStorageKey();
     
     return new Promise((resolve) => {
-      chrome.storage.local.get([storageKey], (result) => {
-        const stamps = result[storageKey] || [];
-        const exists = stamps.some(s => s.id === stamp.id);
-        if (!exists) {
-          stamps.push(stamp);
-          chrome.storage.local.set({ [storageKey]: stamps }, () => {
-            resolve(true);
-          });
-        } else {
-          resolve(false);
-        }
-      });
+      try {
+        chrome.storage.local.get([storageKey], (result) => {
+          if (chrome.runtime.lastError) {
+            console.log('ScrollStamp: Storage error', chrome.runtime.lastError);
+            resolve(false);
+            return;
+          }
+          const stamps = result[storageKey] || [];
+          const exists = stamps.some(s => s.id === stamp.id);
+          if (!exists) {
+            stamps.push(stamp);
+            chrome.storage.local.set({ [storageKey]: stamps }, () => {
+              resolve(true);
+            });
+          } else {
+            resolve(false);
+          }
+        });
+      } catch (e) {
+        console.log('ScrollStamp: Extension context invalidated');
+        resolve(false);
+      }
     });
   }
 
@@ -442,59 +466,87 @@
   }
 
   // Listen for messages from popup
-  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === 'getStamps') {
-      const storageKey = getStorageKey();
-      chrome.storage.local.get([storageKey], (result) => {
-        sendResponse({ stamps: result[storageKey] || [] });
-      });
-      return true;
-    }
-    
-    if (request.action === 'scrollTo') {
-      const success = handleScrollTo(request.stamp);
-      sendResponse({ success });
-      return true;
-    }
-    
-    if (request.action === 'deleteStamp') {
-      const storageKey = getStorageKey();
-      chrome.storage.local.get([storageKey], (result) => {
-        const stamps = (result[storageKey] || []).filter(s => s.id !== request.stampId);
-        chrome.storage.local.set({ [storageKey]: stamps }, () => {
-          sendResponse({ success: true });
-        });
-      });
-      return true;
-    }
-    
-    if (request.action === 'getMode') {
-      sendResponse({
-        isAIChat: isAIChat,
-        isPDF: isPDF,
-        pdfSupported: isPDFSupported,
-        platform: currentPlatform
-      });
-      return true;
-    }
-    
-    if (request.action === 'updateTitle') {
-      const storageKey = getStorageKey();
-      chrome.storage.local.get([storageKey], (result) => {
-        const stamps = result[storageKey] || [];
-        const stampIndex = stamps.findIndex(s => s.id === request.stampId);
-        if (stampIndex !== -1) {
-          stamps[stampIndex].title = request.title;
-          chrome.storage.local.set({ [storageKey]: stamps }, () => {
-            sendResponse({ success: true });
-          });
-        } else {
-          sendResponse({ success: false });
+  if (isExtensionContextValid()) {
+    try {
+      chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+        // Check context validity before processing
+        if (!isExtensionContextValid()) {
+          return false;
+        }
+        
+        try {
+          if (request.action === 'getStamps') {
+            const storageKey = getStorageKey();
+            chrome.storage.local.get([storageKey], (result) => {
+              if (chrome.runtime.lastError) {
+                sendResponse({ stamps: [] });
+                return;
+              }
+              sendResponse({ stamps: result[storageKey] || [] });
+            });
+            return true;
+          }
+          
+          if (request.action === 'scrollTo') {
+            const success = handleScrollTo(request.stamp);
+            sendResponse({ success });
+            return true;
+          }
+          
+          if (request.action === 'deleteStamp') {
+            const storageKey = getStorageKey();
+            chrome.storage.local.get([storageKey], (result) => {
+              if (chrome.runtime.lastError) {
+                sendResponse({ success: false });
+                return;
+              }
+              const stamps = (result[storageKey] || []).filter(s => s.id !== request.stampId);
+              chrome.storage.local.set({ [storageKey]: stamps }, () => {
+                sendResponse({ success: true });
+              });
+            });
+            return true;
+          }
+          
+          if (request.action === 'getMode') {
+            sendResponse({
+              isAIChat: isAIChat,
+              isPDF: isPDF,
+              pdfSupported: isPDFSupported,
+              platform: currentPlatform
+            });
+            return true;
+          }
+          
+          if (request.action === 'updateTitle') {
+            const storageKey = getStorageKey();
+            chrome.storage.local.get([storageKey], (result) => {
+              if (chrome.runtime.lastError) {
+                sendResponse({ success: false });
+                return;
+              }
+              const stamps = result[storageKey] || [];
+              const stampIndex = stamps.findIndex(s => s.id === request.stampId);
+              if (stampIndex !== -1) {
+                stamps[stampIndex].title = request.title;
+                chrome.storage.local.set({ [storageKey]: stamps }, () => {
+                  sendResponse({ success: true });
+                });
+              } else {
+                sendResponse({ success: false });
+              }
+            });
+            return true;
+          }
+        } catch (e) {
+          console.log('ScrollStamp: Message handler error', e);
+          return false;
         }
       });
-      return true;
+    } catch (e) {
+      console.log('ScrollStamp: Could not add message listener', e);
     }
-  });
+  }
 
   function init() {
     currentPlatform = detectAIPlatform();
