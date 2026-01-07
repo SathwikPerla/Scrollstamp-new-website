@@ -252,10 +252,8 @@ async function scrollToStamp(stamp) {
     return;
   }
 
-  // Only allow scrolling if we're on the SAME origin+path
+  // Only allow scrolling if we're on the SAME origin+path - do nothing otherwise
   if (currentOrigin !== stampOrigin || currentPath !== stampPath) {
-    // Show a toast-like alert instead of navigating
-    alert('This bookmark is for a different page. Please navigate there first to use it.');
     return;
   }
 
