@@ -54,9 +54,20 @@
     return null;
   }
 
+  // Detect if current page is a PDF
+  function isPDFPage() {
+    const url = window.location.href.toLowerCase();
+    const contentType = document.contentType || '';
+    return url.endsWith('.pdf') || 
+           contentType.includes('pdf') || 
+           document.querySelector('embed[type="application/pdf"]') !== null ||
+           document.body?.children[0]?.tagName === 'EMBED';
+  }
+
   let floatingBtn = null;
   let currentPlatform = null;
   let isAIChat = false;
+  let isPDF = false;
 
   // ============================================
   // V2: MESSAGE-BASED BOOKMARKING (AI Chats)
@@ -128,8 +139,10 @@
       type: 'message', // v2 type
       index: messageInfo.index,
       preview: preview,
+      title: '', // User-editable title (empty by default)
       timestamp: Date.now(),
       url: window.location.href,
+      hostname: window.location.hostname,
       platform: currentPlatform
     };
   }
@@ -196,14 +209,16 @@
     
     return {
       id: `scroll_${scrollPercent}_${Date.now().toString(36)}`,
-      type: 'scroll', // v1 type
+      type: isPDF ? 'pdf' : 'scroll', // v1 type with PDF distinction
       scrollPercent: scrollPercent,
       scrollY: window.scrollY,
       preview: preview,
       pageTitle: getPageTitle(),
+      title: '', // User-editable title (empty by default)
       timestamp: Date.now(),
       url: window.location.href,
-      platform: 'web'
+      hostname: window.location.hostname,
+      platform: isPDF ? 'PDF' : 'web'
     };
   }
 
@@ -294,7 +309,7 @@
     floatingBtn = document.createElement('div');
     floatingBtn.id = 'scrollstamp-pin';
     floatingBtn.innerHTML = '📌';
-    floatingBtn.title = isAIChat ? 'Bookmark this AI message' : 'Bookmark this scroll position';
+    floatingBtn.title = isAIChat ? 'Bookmark this AI message' : (isPDF ? 'Bookmark this PDF position' : 'Bookmark this scroll position');
     
     floatingBtn.addEventListener('click', async () => {
       let stamp;
@@ -376,7 +391,25 @@
     if (request.action === 'getMode') {
       sendResponse({ 
         isAIChat: isAIChat, 
+        isPDF: isPDF,
         platform: currentPlatform 
+      });
+      return true;
+    }
+    
+    if (request.action === 'updateTitle') {
+      const storageKey = getStorageKey();
+      chrome.storage.local.get([storageKey], (result) => {
+        const stamps = result[storageKey] || [];
+        const stampIndex = stamps.findIndex(s => s.id === request.stampId);
+        if (stampIndex !== -1) {
+          stamps[stampIndex].title = request.title;
+          chrome.storage.local.set({ [storageKey]: stamps }, () => {
+            sendResponse({ success: true });
+          });
+        } else {
+          sendResponse({ success: false });
+        }
       });
       return true;
     }
@@ -385,10 +418,11 @@
   function init() {
     currentPlatform = detectAIPlatform();
     isAIChat = currentPlatform !== null;
+    isPDF = isPDFPage();
     
     createFloatingButton();
     
-    const mode = isAIChat ? `AI Chat (${currentPlatform})` : 'Scroll Mode';
+    const mode = isAIChat ? `AI Chat (${currentPlatform})` : (isPDF ? 'PDF Mode' : 'Scroll Mode');
     console.log(`ScrollStamp initialized - ${mode}`);
   }
 

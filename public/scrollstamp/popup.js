@@ -27,6 +27,10 @@ async function detectCurrentMode() {
           modeBadge.textContent = response.platform;
           modeBadge.className = 'mode-badge ai-mode';
           emptyHint.textContent = 'Click 📌 to bookmark AI messages';
+        } else if (response.isPDF) {
+          modeBadge.textContent = 'PDF';
+          modeBadge.className = 'mode-badge pdf-mode';
+          emptyHint.textContent = 'Click 📌 to bookmark PDF positions';
         } else {
           modeBadge.textContent = 'Scroll';
           modeBadge.className = 'mode-badge scroll-mode';
@@ -83,29 +87,77 @@ function createStampElement(stamp) {
   
   const timeAgo = formatTimeAgo(stamp.timestamp);
   const isMessage = stamp.type === 'message';
-  const icon = isMessage ? '💬' : '📍';
-  const typeClass = isMessage ? 'message' : 'scroll';
-  const typeLabel = isMessage ? stamp.platform : `${stamp.scrollPercent || 0}%`;
+  const isPdf = stamp.type === 'pdf';
+  const icon = isMessage ? '💬' : (isPdf ? '📄' : '📍');
+  const typeClass = isMessage ? 'message' : (isPdf ? 'pdf' : 'scroll');
+  const typeLabel = isMessage ? stamp.platform : (isPdf ? 'PDF' : `${stamp.scrollPercent || 0}%`);
   
-  let preview = stamp.preview || 'No preview';
-  if (!isMessage && stamp.pageTitle) {
-    preview = `${stamp.pageTitle} - ${preview}`;
+  // Get display title - use custom title if set, otherwise preview
+  let displayTitle = stamp.title || stamp.preview || 'No preview';
+  if (!isMessage && !stamp.title && stamp.pageTitle) {
+    displayTitle = stamp.pageTitle;
   }
+  
+  // Extract hostname for display
+  let hostname = stamp.hostname || '';
+  if (!hostname && stamp.url) {
+    try {
+      hostname = new URL(stamp.url).hostname;
+    } catch (e) {
+      hostname = '';
+    }
+  }
+  // Shorten hostname for display
+  const shortHostname = hostname.replace(/^www\./, '').substring(0, 25);
   
   li.innerHTML = `
     <span class="stamp-icon">${icon}</span>
     <div class="stamp-content">
-      <div class="stamp-preview">${escapeHtml(preview)}</div>
+      <div class="stamp-title-row">
+        <input type="text" class="stamp-title-input" value="${escapeHtml(displayTitle)}" placeholder="Add title..." title="Click to edit title" />
+        <button class="stamp-edit-btn" title="Edit title">✏️</button>
+      </div>
       <div class="stamp-meta">
         <span class="stamp-type ${typeClass}">${typeLabel}</span>
+        <span class="stamp-hostname" title="${hostname}">${shortHostname}</span>
         <span>${timeAgo}</span>
       </div>
     </div>
     <button class="stamp-delete" title="Delete bookmark">✕</button>
   `;
   
+  const titleInput = li.querySelector('.stamp-title-input');
+  const editBtn = li.querySelector('.stamp-edit-btn');
+  
+  // Handle title editing
+  editBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    titleInput.focus();
+    titleInput.select();
+  });
+  
+  titleInput.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+  
+  titleInput.addEventListener('blur', () => {
+    updateStampTitle(stamp, titleInput.value);
+  });
+  
+  titleInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      titleInput.blur();
+    }
+    if (e.key === 'Escape') {
+      titleInput.value = stamp.title || stamp.preview || 'No preview';
+      titleInput.blur();
+    }
+  });
+  
   li.addEventListener('click', (e) => {
-    if (e.target.classList.contains('stamp-delete')) return;
+    if (e.target.classList.contains('stamp-delete') || 
+        e.target.classList.contains('stamp-title-input') ||
+        e.target.classList.contains('stamp-edit-btn')) return;
     scrollToStamp(stamp);
   });
   
@@ -115,6 +167,17 @@ function createStampElement(stamp) {
   });
   
   return li;
+}
+
+async function updateStampTitle(stamp, newTitle) {
+  chrome.storage.local.get([stamp.storageKey], (result) => {
+    const stamps = result[stamp.storageKey] || [];
+    const stampIndex = stamps.findIndex(s => s.id === stamp.id);
+    if (stampIndex !== -1) {
+      stamps[stampIndex].title = newTitle;
+      chrome.storage.local.set({ [stamp.storageKey]: stamps });
+    }
+  });
 }
 
 async function scrollToStamp(stamp) {
