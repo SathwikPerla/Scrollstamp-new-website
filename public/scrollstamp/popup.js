@@ -89,37 +89,52 @@ async function loadStamps() {
   const stampsList = document.getElementById('stamps-list');
   const emptyState = document.getElementById('empty-state');
   
-  chrome.storage.local.get(null, (items) => {
-    const allStamps = [];
-    
-    Object.keys(items).forEach(key => {
-      if (key.startsWith('scrollstamp_')) {
-        const stamps = items[key];
-        if (Array.isArray(stamps)) {
-          stamps.forEach(stamp => {
-            allStamps.push({ ...stamp, storageKey: key });
-          });
-        }
+  try {
+    chrome.storage.local.get(null, (items) => {
+      if (chrome.runtime.lastError) {
+        console.log('ScrollStamp: Storage error', chrome.runtime.lastError);
+        emptyState.style.display = 'flex';
+        stampsList.style.display = 'none';
+        return;
       }
+      
+      const allStamps = [];
+      
+      Object.keys(items || {}).forEach(key => {
+        if (key.startsWith('scrollstamp_')) {
+          const stamps = items[key];
+          if (Array.isArray(stamps)) {
+            stamps.forEach(stamp => {
+              if (stamp && typeof stamp === 'object') {
+                allStamps.push({ ...stamp, storageKey: key });
+              }
+            });
+          }
+        }
+      });
+      
+      allStamps.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+      
+      if (allStamps.length === 0) {
+        emptyState.style.display = 'flex';
+        stampsList.style.display = 'none';
+        return;
+      }
+      
+      emptyState.style.display = 'none';
+      stampsList.style.display = 'block';
+      stampsList.innerHTML = '';
+      
+      allStamps.forEach(stamp => {
+        const li = createStampElement(stamp);
+        stampsList.appendChild(li);
+      });
     });
-    
-    allStamps.sort((a, b) => b.timestamp - a.timestamp);
-    
-    if (allStamps.length === 0) {
-      emptyState.style.display = 'flex';
-      stampsList.style.display = 'none';
-      return;
-    }
-    
-    emptyState.style.display = 'none';
-    stampsList.style.display = 'block';
-    stampsList.innerHTML = '';
-    
-    allStamps.forEach(stamp => {
-      const li = createStampElement(stamp);
-      stampsList.appendChild(li);
-    });
-  });
+  } catch (e) {
+    console.log('ScrollStamp: Error loading stamps', e);
+    emptyState.style.display = 'flex';
+    stampsList.style.display = 'none';
+  }
 }
 
 function createStampElement(stamp) {
@@ -223,14 +238,24 @@ function createStampElement(stamp) {
 }
 
 async function updateStampTitle(stamp, newTitle) {
-  chrome.storage.local.get([stamp.storageKey], (result) => {
-    const stamps = result[stamp.storageKey] || [];
-    const stampIndex = stamps.findIndex(s => s.id === stamp.id);
-    if (stampIndex !== -1) {
-      stamps[stampIndex].title = newTitle;
-      chrome.storage.local.set({ [stamp.storageKey]: stamps });
-    }
-  });
+  if (!stamp || !stamp.storageKey) return;
+  
+  try {
+    chrome.storage.local.get([stamp.storageKey], (result) => {
+      if (chrome.runtime.lastError) {
+        console.log('ScrollStamp: Error updating title', chrome.runtime.lastError);
+        return;
+      }
+      const stamps = result[stamp.storageKey] || [];
+      const stampIndex = stamps.findIndex(s => s && s.id === stamp.id);
+      if (stampIndex !== -1) {
+        stamps[stampIndex].title = newTitle;
+        chrome.storage.local.set({ [stamp.storageKey]: stamps });
+      }
+    });
+  } catch (e) {
+    console.log('ScrollStamp: Error updating title', e);
+  }
 }
 
 async function scrollToStamp(stamp) {
@@ -266,24 +291,46 @@ async function scrollToStamp(stamp) {
 }
 
 async function deleteStamp(stamp) {
-  chrome.storage.local.get([stamp.storageKey], (result) => {
-    const stamps = (result[stamp.storageKey] || []).filter(s => s.id !== stamp.id);
-    
-    if (stamps.length === 0) {
-      chrome.storage.local.remove(stamp.storageKey, loadStamps);
-    } else {
-      chrome.storage.local.set({ [stamp.storageKey]: stamps }, loadStamps);
-    }
-  });
+  if (!stamp || !stamp.storageKey) return;
+  
+  try {
+    chrome.storage.local.get([stamp.storageKey], (result) => {
+      if (chrome.runtime.lastError) {
+        console.log('ScrollStamp: Error deleting stamp', chrome.runtime.lastError);
+        return;
+      }
+      const stamps = (result[stamp.storageKey] || []).filter(s => s && s.id !== stamp.id);
+      
+      if (stamps.length === 0) {
+        chrome.storage.local.remove(stamp.storageKey, loadStamps);
+      } else {
+        chrome.storage.local.set({ [stamp.storageKey]: stamps }, loadStamps);
+      }
+    });
+  } catch (e) {
+    console.log('ScrollStamp: Error deleting stamp', e);
+  }
 }
 
 function clearAllStamps() {
   if (!confirm('Delete all bookmarks?')) return;
   
-  chrome.storage.local.get(null, (items) => {
-    const keysToRemove = Object.keys(items).filter(key => key.startsWith('scrollstamp_'));
-    chrome.storage.local.remove(keysToRemove, loadStamps);
-  });
+  try {
+    chrome.storage.local.get(null, (items) => {
+      if (chrome.runtime.lastError) {
+        console.log('ScrollStamp: Error clearing stamps', chrome.runtime.lastError);
+        return;
+      }
+      const keysToRemove = Object.keys(items || {}).filter(key => key.startsWith('scrollstamp_'));
+      if (keysToRemove.length > 0) {
+        chrome.storage.local.remove(keysToRemove, loadStamps);
+      } else {
+        loadStamps();
+      }
+    });
+  } catch (e) {
+    console.log('ScrollStamp: Error clearing stamps', e);
+  }
 }
 
 function formatTimeAgo(timestamp) {

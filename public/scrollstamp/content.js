@@ -567,13 +567,23 @@
     init();
   }
 
-  // Re-init on SPA navigation
-  let lastUrl = location.href;
-  new MutationObserver(() => {
-    if (location.href !== lastUrl) {
-      lastUrl = location.href;
-      setTimeout(init, 500);
+  // Re-init on SPA navigation (with safety checks)
+  try {
+    let lastUrl = location.href;
+    if (document.body) {
+      new MutationObserver(() => {
+        try {
+          if (location.href !== lastUrl) {
+            lastUrl = location.href;
+            setTimeout(init, 500);
+          }
+        } catch (e) {
+          // Ignore errors during URL check
+        }
+      }).observe(document.body, { subtree: true, childList: true });
     }
-  }).observe(document.body, { subtree: true, childList: true });
+  } catch (e) {
+    console.log('ScrollStamp: Could not set up SPA navigation observer');
+  }
 
 })();
