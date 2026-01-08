@@ -72,7 +72,7 @@ export function HeroSection() {
               className="text-lg px-8 py-6 glass border-accent/50 hover:bg-accent/10 hover:border-accent transition-all pulse-glow"
               asChild
             >
-              <a href="https://github.com/SathwikPerla/ScrollStamp" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/SathwikPerla/ScrollStamp/tree/v2.1-hybrid" target="_blank" rel="noopener noreferrer">
                 <Star className="w-5 h-5 mr-2 text-accent" />
                 Star on GitHub
               </a>

@@ -60,7 +60,7 @@ export function StarCTASection() {
             className="text-xl px-10 py-8 bg-gradient-to-r from-accent to-orange-500 hover:opacity-90 transition-all pulse-glow group"
             asChild
           >
-            <a href="https://github.com/SathwikPerla/ScrollStamp" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/SathwikPerla/ScrollStamp/tree/v2.1-hybrid" target="_blank" rel="noopener noreferrer">
               <Star className="w-6 h-6 mr-2 group-hover:fill-current transition-all" />
               Star on GitHub
               <Heart className="w-5 h-5 ml-2 text-white/70" />
@@ -70,7 +70,7 @@ export function StarCTASection() {
           {/* Secondary link */}
           <div className="mt-6">
             <a 
-              href="https://github.com/SathwikPerla/ScrollStamp" 
+              href="https://github.com/SathwikPerla/ScrollStamp/tree/v2.1-hybrid" 
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"

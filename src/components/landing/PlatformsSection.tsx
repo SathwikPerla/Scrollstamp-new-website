@@ -1,35 +1,29 @@
-import { Globe, AlertTriangle } from "lucide-react";
+import { Globe, AlertTriangle, ShieldAlert } from "lucide-react";
 
 const platforms = [
   { 
     name: "ChatGPT", 
-    gradient: "from-emerald-400 to-teal-500",
-    letter: "G"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg"
   },
   { 
     name: "Claude", 
-    gradient: "from-orange-400 to-amber-500",
-    letter: "C"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Claude_AI_logo.svg"
   },
   { 
     name: "Gemini", 
-    gradient: "from-blue-400 to-cyan-500",
-    letter: "G"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg"
   },
   { 
     name: "Perplexity", 
-    gradient: "from-violet-400 to-purple-500",
-    letter: "P"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Perplexity_AI_logo.svg"
   },
   { 
     name: "Grok", 
-    gradient: "from-slate-400 to-zinc-500",
-    letter: "X"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Grok_logo_%28August_2024%29.svg"
   },
   { 
     name: "DeepSeek", 
-    gradient: "from-indigo-400 to-blue-500",
-    letter: "D"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/e/e7/DeepSeek_logo.svg"
   },
 ];
 
@@ -55,8 +49,12 @@ export function PlatformsSection() {
                 key={platform.name}
                 className="glass rounded-xl p-6 text-center hover:scale-105 transition-transform cursor-default group"
               >
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${platform.gradient} flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform`}>
-                  <span className="text-2xl font-bold text-white">{platform.letter}</span>
+                <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform p-3">
+                  <img 
+                    src={platform.logo} 
+                    alt={`${platform.name} logo`}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <h3 className="font-semibold">{platform.name}</h3>
               </div>
@@ -74,10 +72,24 @@ export function PlatformsSection() {
             </p>
           </div>
 
-          {/* Disclaimer */}
-          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-            <AlertTriangle className="w-4 h-4" />
-            <span>Note: PDF files are not currently supported</span>
+          {/* Disclaimers */}
+          <div className="space-y-3">
+            <div className="glass rounded-lg p-4 border-amber-500/20">
+              <div className="flex items-start gap-3">
+                <ShieldAlert className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-amber-400">Protected Websites</p>
+                  <p className="text-sm text-muted-foreground">
+                    Some sites with restricted editors, embedded tools, or custom scroll containers may have limited bookmark support. The bookmark will be saved, but automatic scroll-to-position may not work on these protected pages.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+              <AlertTriangle className="w-4 h-4" />
+              <span>Note: PDF files are not currently supported</span>
+            </div>
           </div>
         </div>
       </div>

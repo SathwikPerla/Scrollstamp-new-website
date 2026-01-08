@@ -7,7 +7,7 @@ const steps = [
     icon: Download,
     title: "Clone or Download",
     description: "Get the extension from GitHub",
-    code: "git clone https://github.com/SathwikPerla/ScrollStamp.git"
+    code: "git clone -b v2.1-hybrid https://github.com/SathwikPerla/ScrollStamp.git"
   },
   {
     icon: Settings,
@@ -36,7 +36,7 @@ export function InstallationSection() {
   const [copied, setCopied] = useState(false);
 
   const copyCommand = () => {
-    navigator.clipboard.writeText("git clone https://github.com/SathwikPerla/ScrollStamp.git");
+    navigator.clipboard.writeText("git clone -b v2.1-hybrid https://github.com/SathwikPerla/ScrollStamp.git");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
