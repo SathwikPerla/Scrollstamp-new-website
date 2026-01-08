@@ -2,7 +2,7 @@
   <img src="icon.png" alt="ScrollStamp Logo" width="128" height="128">
 </p>
 
-<h1 align="center">📌 ScrollStamp</h1>
+<h1 align="center">📌 ScrollStamp Hybrid (V1 + V2)</h1>
 
 <p align="center">
   <strong>Smart bookmarking for AI conversations and web content</strong>
@@ -31,9 +31,10 @@
 
 | Context | Mode | How it Works |
 |---------|------|--------------|
-| **AI Chat Platforms** | 🤖 Message Mode | Bookmarks specific AI assistant responses |
-| **PDF Documents** | 📄 PDF Mode | Saves page numbers and scroll positions |
-| **All Other Websites** | 📜 Scroll Mode | Captures scroll position with context preview |
+| **AI Chat Platforms** | 🤖 Message Mode (V2) | Bookmarks specific AI assistant responses |
+| **All Other Websites** | 📜 Scroll Mode (V1) | Captures scroll position with context preview |
+
+> **Note:** PDF documents are not supported as they are not standard web pages.
 
 Never lose track of important AI responses or web content again!
 
@@ -65,7 +66,6 @@ Never lose track of important AI responses or web content again!
 |---------|-------------|
 | Position Tracking | Saves exact scroll percentage |
 | Context Capture | Extracts visible text as preview |
-| PDF Support | Special handling for PDF documents |
 | Universal Compatibility | Works on any scrollable webpage |
 
 ---
@@ -87,8 +87,8 @@ Never lose track of important AI responses or web content again!
 
 | Platform | Support |
 |----------|---------|
-| PDF Viewers | ✅ Enhanced Support |
 | All Websites | ✅ Universal Support |
+| PDF Documents | ❌ Not Supported |
 
 ---
 
