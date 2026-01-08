@@ -19,7 +19,7 @@ export function Footer() {
             {/* Links */}
             <div className="flex items-center gap-6">
               <a 
-                href="https://github.com/SathwikPerla/ScrollStamp" 
+                href="https://github.com/SathwikPerla/ScrollStamp/tree/v2.1-hybrid" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
@@ -28,7 +28,7 @@ export function Footer() {
                 <span className="text-sm">GitHub</span>
               </a>
               <a 
-                href="https://github.com/SathwikPerla/ScrollStamp/issues" 
+                href="https://github.com/SathwikPerla/ScrollStamp/tree/v2.1-hybrid/issues" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
