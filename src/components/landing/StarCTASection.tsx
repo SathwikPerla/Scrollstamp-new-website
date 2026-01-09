@@ -26,7 +26,7 @@ export function StarCTASection() {
 
           {/* Description */}
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Stars help other developers discover this tool. Your support means the world to an indie developer!
+            Stars help other developers discover this tool. Your support means the world to an indie developer! Share it with your friends too!
           </p>
 
           {/* Stats */}
