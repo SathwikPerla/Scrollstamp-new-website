@@ -1,29 +1,35 @@
-import { Globe, AlertTriangle, ShieldAlert } from "lucide-react";
+import { Globe, AlertTriangle, ShieldAlert, Bot, Sparkles, Brain, Search, Zap, MessageSquare } from "lucide-react";
 
 const platforms = [
   { 
     name: "ChatGPT", 
-    logo: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg"
+    icon: MessageSquare,
+    color: "from-green-400 to-emerald-600"
   },
   { 
     name: "Claude", 
-    logo: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Claude_AI_logo.svg"
+    icon: Brain,
+    color: "from-orange-400 to-amber-600"
   },
   { 
     name: "Gemini", 
-    logo: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg"
+    icon: Sparkles,
+    color: "from-blue-400 to-indigo-600"
   },
   { 
     name: "Perplexity", 
-    logo: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Perplexity_AI_logo.svg"
+    icon: Search,
+    color: "from-cyan-400 to-teal-600"
   },
   { 
     name: "Grok", 
-    logo: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Grok_logo_%28August_2024%29.svg"
+    icon: Zap,
+    color: "from-purple-400 to-violet-600"
   },
   { 
     name: "DeepSeek", 
-    logo: "https://upload.wikimedia.org/wikipedia/commons/e/e7/DeepSeek_logo.svg"
+    icon: Bot,
+    color: "from-pink-400 to-rose-600"
   },
 ];
 
@@ -49,12 +55,8 @@ export function PlatformsSection() {
                 key={platform.name}
                 className="glass rounded-xl p-6 text-center hover:scale-105 transition-transform cursor-default group"
               >
-                <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform p-3">
-                  <img 
-                    src={platform.logo} 
-                    alt={`${platform.name} logo`}
-                    className="w-full h-full object-contain"
-                  />
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${platform.color} flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform shadow-lg`}>
+                  <platform.icon className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="font-semibold">{platform.name}</h3>
               </div>

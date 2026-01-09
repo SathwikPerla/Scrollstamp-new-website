@@ -74,12 +74,6 @@ export function HowItWorksSection() {
             </div>
           </div>
 
-          {/* Demo animation hint */}
-          <div className="text-center mt-12">
-            <p className="text-sm text-muted-foreground">
-              💡 Pro tip: Use keyboard shortcuts for even faster bookmarking
-            </p>
-          </div>
         </div>
       </div>
     </section>
