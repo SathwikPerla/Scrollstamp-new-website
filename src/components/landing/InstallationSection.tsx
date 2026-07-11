@@ -41,6 +41,10 @@ export function InstallationSection() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleDownloadClick = () => {
+    fetch("https://api.counterapi.dev/v1/scrollstamp/downloads/up").catch(() => {});
+  };
+
   return (
     <section className="py-24 relative border-t border-border/40 bg-background/50" id="install">
       <div className="container px-4 mx-auto max-w-4xl">
@@ -114,7 +118,11 @@ export function InstallationSection() {
               className="bg-primary text-primary-foreground font-semibold px-8 py-6 shadow-md hover:opacity-90"
               asChild
             >
-              <a href="https://github.com/SathwikPerla/ScrollStamp/archive/refs/heads/v2.1-hybrid.zip" rel="noopener noreferrer">
+              <a 
+                href="https://github.com/SathwikPerla/ScrollStamp/archive/refs/heads/v2.1-hybrid.zip" 
+                rel="noopener noreferrer"
+                onClick={handleDownloadClick}
+              >
                 <Download className="w-4 h-4 mr-2" />
                 Get Extension Zip
               </a>

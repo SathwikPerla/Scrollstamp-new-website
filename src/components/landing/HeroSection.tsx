@@ -1,4 +1,5 @@
-import { Star, Download, MessageSquare, Globe, Sparkles, Terminal } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Star, Download, MessageSquare, Globe, Sparkles, Terminal, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const platforms = [
@@ -11,6 +12,54 @@ const platforms = [
 ];
 
 export function HeroSection() {
+  const [visits, setVisits] = useState<number | null>(null);
+  const [downloads, setDownloads] = useState<number | null>(null);
+
+  useEffect(() => {
+    // Only increment visits count once per page load session
+    const hasVisited = sessionStorage.getItem("scrollstamp_visited");
+    const visitUrl = hasVisited 
+      ? "https://api.counterapi.dev/v1/scrollstamp/visits/" 
+      : "https://api.counterapi.dev/v1/scrollstamp/visits/up";
+
+    fetch(visitUrl)
+      .then(res => res.json())
+      .then(data => {
+        if (data && typeof data.count === "number") {
+          setVisits(data.count);
+          if (!hasVisited) {
+            sessionStorage.setItem("scrollstamp_visited", "true");
+          }
+        }
+      })
+      .catch(() => {});
+
+    // Fetch initial downloads count
+    fetch("https://api.counterapi.dev/v1/scrollstamp/downloads/")
+      .then(res => res.json())
+      .then(data => {
+        if (data && typeof data.count === "number") {
+          setDownloads(data.count);
+        } else {
+          setDownloads(0);
+        }
+      })
+      .catch(() => {
+        setDownloads(0);
+      });
+  }, []);
+
+  const handleDownloadClick = () => {
+    fetch("https://api.counterapi.dev/v1/scrollstamp/downloads/up")
+      .then(res => res.json())
+      .then(data => {
+        if (data && typeof data.count === "number") {
+          setDownloads(data.count);
+        }
+      })
+      .catch(() => {});
+  };
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-32 pb-20 dot-grid">
       {/* Subtle fade overlay */}
@@ -23,10 +72,10 @@ export function HeroSection() {
         <div className="max-w-4xl mx-auto text-center">
           {/* Logo container */}
           <div className="mb-6 animate-fade-in-up flex justify-center">
-            <div className="relative p-4 rounded-2xl bg-card border border-border/80 shadow-md floating">
+            <div className="relative w-16 h-16 rounded-2xl bg-card border border-border/80 flex items-center justify-center shadow-md">
               <img 
                 src="/favicon.png" 
-                alt="ScrollStamp Logo" 
+                alt="ScrollStamp" 
                 className="w-14 h-14 object-contain"
               />
               <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent rounded-2xl blur opacity-10 -z-10" />
@@ -56,13 +105,17 @@ export function HeroSection() {
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-16 animate-fade-in-up animation-delay-400">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10 animate-fade-in-up animation-delay-400">
             <Button 
               size="lg" 
               className="text-sm font-semibold px-8 py-6 bg-primary text-primary-foreground hover:opacity-90 shadow-lg border border-primary/20"
               asChild
             >
-              <a href="https://github.com/SathwikPerla/ScrollStamp/archive/refs/heads/v2.1-hybrid.zip" rel="noopener noreferrer">
+              <a 
+                href="https://github.com/SathwikPerla/ScrollStamp/archive/refs/heads/v2.1-hybrid.zip" 
+                rel="noopener noreferrer"
+                onClick={handleDownloadClick}
+              >
                 <Download className="w-4 h-4 mr-2" />
                 Get ScrollStamp Free
               </a>
@@ -79,6 +132,27 @@ export function HeroSection() {
               </a>
             </Button>
           </div>
+
+          {/* Live Stats Badge */}
+          {(visits !== null || downloads !== null) && (
+            <div className="inline-flex items-center gap-6 px-4 py-2 rounded-full border border-border bg-card/50 text-[11px] font-mono mb-16 animate-fade-in-up animation-delay-450 text-muted-foreground select-none">
+              {visits !== null && (
+                <span className="flex items-center gap-1.5">
+                  <Eye className="w-3.5 h-3.5 text-blue-400" />
+                  Total Visits: <strong className="text-foreground">{visits.toLocaleString()}</strong>
+                </span>
+              )}
+              {visits !== null && downloads !== null && (
+                <span className="text-border">|</span>
+              )}
+              {downloads !== null && (
+                <span className="flex items-center gap-1.5">
+                  <Download className="w-3.5 h-3.5 text-emerald-400" />
+                  Total Downloads: <strong className="text-foreground">{downloads.toLocaleString()}</strong>
+                </span>
+              )}
+            </div>
+          )}
 
           {/* Platform badges */}
           <div className="animate-fade-in-up animation-delay-500 bg-card/30 border border-border/40 rounded-2xl p-6 max-w-3xl mx-auto">
