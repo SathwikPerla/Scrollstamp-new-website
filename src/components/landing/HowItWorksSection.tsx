@@ -1,4 +1,4 @@
-import { Scroll, Pin, RotateCcw, ArrowRight } from "lucide-react";
+import { Scroll, Bookmark, RotateCcw, ArrowRight } from "lucide-react";
 
 const steps = [
   {
@@ -8,9 +8,9 @@ const steps = [
     color: "bg-primary/10 border-primary/20 text-primary"
   },
   {
-    icon: Pin,
-    title: "Click the Pin",
-    description: "Tap the floating button to bookmark the exact message context.",
+    icon: Bookmark,
+    title: "Select & Bookmark",
+    description: "Select any word or sentence, then click the bookmark icon that appears.",
     color: "bg-accent/10 border-accent/20 text-accent"
   },
   {

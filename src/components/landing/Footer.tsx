@@ -1,4 +1,4 @@
-import { Github, Heart, Mail } from "lucide-react";
+import { Github, Mail } from "lucide-react";
 
 export function Footer() {
   return (
@@ -42,11 +42,10 @@ export function Footer() {
 
           {/* Bottom line */}
           <div className="text-center pt-6 border-t border-border/40">
-            <p className="text-xs text-muted-foreground flex items-center justify-center gap-1.5">
-              <span>Made with</span>
-              <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 shrink-0" />
-              <span>by</span>
-              <span className="font-semibold text-foreground">Sathwik Perla</span>
+            <p className="text-xs text-muted-foreground font-mono select-none leading-relaxed">
+              <span>Made out of sheer frustration by </span>
+              <span className="font-bold text-foreground">Sathwik Perla</span>
+              <span> on the mess created by long LLM chats</span>
             </p>
             <p className="text-[10px] text-muted-foreground/60 mt-2 font-medium">
               © 2026 ScrollStamp. Open source

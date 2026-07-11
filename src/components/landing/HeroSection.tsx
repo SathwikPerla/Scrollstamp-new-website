@@ -35,7 +35,6 @@ export function HeroSection() {
 
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-muted/40 text-xs font-semibold mb-6 animate-fade-in-up animation-delay-100 text-muted-foreground shadow-sm">
-            <Terminal className="w-3.5 h-3.5 text-primary" />
             <span>v2.1 Hybrid Release</span>
             <span className="text-border">•</span>
             <span>Chrome Extension</span>
@@ -113,13 +112,6 @@ export function HeroSection() {
               <span>Scroll Mode (Any Site)</span>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce opacity-60">
-        <div className="w-5 h-8 rounded-full border border-muted-foreground/30 flex justify-center pt-1.5">
-          <div className="w-1 h-2.5 bg-muted-foreground/50 rounded-full" />
         </div>
       </div>
     </section>

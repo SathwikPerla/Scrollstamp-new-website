@@ -36,7 +36,7 @@ const modes = [
     color: "accent",
     description: "Position-based bookmarking that works on any website",
     features: [
-      { icon: MousePointer, title: "Any Website", desc: "Works on blogs, docs, articles, and more" },
+      { icon: MousePointer, title: "Any Website", desc: "Works on blogs, articles, and more" },
       { icon: Navigation, title: "Precise Position", desc: "Returns to exact scroll location" },
       { icon: Database, title: "Context Preview", desc: "Saves text snippet for easy identification" },
       { icon: Eye, title: "Visual Marker", desc: "See exactly where you left off" },
