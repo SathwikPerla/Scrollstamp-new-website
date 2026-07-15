@@ -72,14 +72,11 @@ export function HeroSection() {
         <div className="max-w-4xl mx-auto text-center">
           {/* Logo container */}
           <div className="mb-6 animate-fade-in-up flex justify-center">
-            <div className="relative w-16 h-16 rounded-2xl bg-card border border-border/80 flex items-center justify-center shadow-md">
-              <img 
-                src="/favicon.png" 
-                alt="ScrollStamp" 
-                className="w-14 h-14 object-contain"
-              />
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent rounded-2xl blur opacity-10 -z-10" />
-            </div>
+            <img 
+              src="/favicon.png" 
+              alt="ScrollStamp" 
+              className="w-16 h-16 object-contain rounded-2xl"
+            />
           </div>
 
           {/* Badge */}
