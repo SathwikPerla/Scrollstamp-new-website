@@ -91,7 +91,7 @@ export function HeroSection() {
 
           {/* Headline */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-6 animate-fade-in-up animation-delay-200">
-            Never Lose Your Place
+            Never Lose Your Response
             <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-blue-500 to-indigo-400">
               In AI Conversations
