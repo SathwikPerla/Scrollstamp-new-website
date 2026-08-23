@@ -1,64 +1,65 @@
-import { Scroll, Bookmark, RotateCcw, ArrowRight } from "lucide-react";
+import { Scroll, Bookmark, RotateCcw } from "lucide-react";
 
 const steps = [
   {
+    stepNum: "01",
     icon: Scroll,
     title: "Browse & Scroll",
-    description: "Read through your AI conversation or web content as usual.",
-    color: "bg-primary/10 border-primary/20 text-primary"
+    description: "Read through your AI conversation or web content naturally as you build.",
   },
   {
+    stepNum: "02",
     icon: Bookmark,
     title: "Select & Bookmark",
-    description: "Select any word or sentence, then click the bookmark icon that appears.",
-    color: "bg-accent/10 border-accent/20 text-accent"
+    description: "Simply select any word, sentence, or response text to save your exact position.",
   },
   {
+    stepNum: "03",
     icon: RotateCcw,
     title: "Return Instantly",
-    description: "Click any bookmark in your index to scroll right back.",
-    color: "bg-emerald-500/10 border-emerald-500/20 text-emerald-500"
+    description: "Click any saved checkpoint in your index panel to scroll right back.",
   },
 ];
 
 export function HowItWorksSection() {
   return (
-    <section className="py-24 relative border-t border-border/40" id="how-it-works">
-      <div className="container px-4 mx-auto max-w-6xl">
-        <div className="max-w-5xl mx-auto">
+    <section className="py-24 relative border-t border-white/[0.08] bg-[#05060B]" id="how-it-works">
+      <div className="container relative z-10 px-4 mx-auto max-w-5xl">
+        <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 text-white">
               Three Simple Steps
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              How ScrollStamp keeps your browser contexts organized.
+            <p className="text-base text-[#A7ADBE] max-w-lg mx-auto">
+              How ScrollStamp indexes and organizes your long LLM threads.
             </p>
           </div>
 
-          {/* Steps */}
-          <div className="grid md:grid-cols-3 gap-8">
-            {steps.map((step, index) => (
-              <div key={step.title} className="relative">
-                {/* Step card */}
-                <div className="bg-card border border-border/85 rounded-xl p-8 text-center hover:border-border transition-all hover:translate-y-[-2px] shadow-sm">
-                  {/* Step number */}
-                  <div className="absolute top-4 left-4 w-6 h-6 rounded-full bg-muted border border-border flex items-center justify-center text-xs font-bold font-mono">
-                    {index + 1}
+          {/* Steps Grid */}
+          <div className="grid md:grid-cols-3 gap-6">
+            {steps.map((step) => (
+              <div 
+                key={step.title} 
+                className="apple-glass apple-glass-hover rounded-2xl p-7 text-left relative flex flex-col justify-between"
+              >
+                {/* Step number badge */}
+                <div className="flex items-center justify-between mb-6">
+                  <span className="text-xs font-mono font-bold text-[#3B82FF] px-2.5 py-1 rounded-md bg-[#2563FF]/10 border border-[#2563FF]/20">
+                    {step.stepNum}
+                  </span>
+                  <div className="w-8 h-8 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/80">
+                    <step.icon className="w-4 h-4" />
                   </div>
-                  
-                  {/* Icon */}
-                  <div className={`w-14 h-14 rounded-xl ${step.color} border flex items-center justify-center mx-auto mb-6 mt-2`}>
-                    <step.icon className="w-6 h-6" />
-                  </div>
-                  
-                  <h3 className="text-lg font-bold tracking-tight mb-2">{step.title}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{step.description}</p>
+                </div>
+
+                <div>
+                  <h3 className="text-base font-bold text-white tracking-tight mb-2">{step.title}</h3>
+                  <p className="text-xs text-[#A7ADBE] leading-relaxed">{step.description}</p>
                 </div>
               </div>
             ))}
           </div>
-
         </div>
       </div>
     </section>

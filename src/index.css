@@ -29,25 +29,25 @@
   }
 
   .dark {
-    --background: 240 10% 5.8%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 5.8%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 5.8%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 76%;
-    --accent: 217.2 91.2% 59.8%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --background: 232 48% 3.5%; /* #05060B - Almost black, slightly blue */
+    --foreground: 0 0% 100%;    /* #FFFFFF - Primary Text */
+    --card: 228 23% 13%;        /* rgba(25, 28, 40, ...) glass base */
+    --card-foreground: 0 0% 100%;
+    --popover: 232 48% 5%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 223 100% 57%;     /* #2563FF - Primary Electric Blue */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 226 24% 18%;
+    --secondary-foreground: 223 35% 70%; /* #A7ADBE - Secondary Text */
+    --muted: 228 20% 12%;
+    --muted-foreground: 223 15% 70%;     /* #A7ADBE */
+    --accent: 239 84% 67%;       /* #4F46E5 / #8B5CF6 Purple Accent */
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --border: 225 25% 18%;       /* Subtle blue-tinted border */
+    --input: 225 25% 18%;
+    --ring: 223 100% 57%;
   }
 }
 
@@ -82,11 +82,28 @@
   }
 
   .glass {
-    @apply bg-card/40 backdrop-blur-md border border-border/40;
+    background: rgba(25, 28, 40, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  .glass-strong {
-    @apply bg-card/75 backdrop-blur-lg border border-border/60;
+  .apple-glass {
+    background: rgba(25, 28, 40, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  .apple-glass-hover {
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .apple-glass-hover:hover {
+    background: rgba(30, 34, 50, 0.8);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 12px 40px 0 rgba(37, 99, 255, 0.15);
   }
 
   .text-glow {

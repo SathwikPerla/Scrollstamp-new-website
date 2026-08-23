@@ -1,4 +1,4 @@
-import { Download, Settings, ToggleRight, FolderOpen, Pin, Copy, Check } from "lucide-react";
+import { Download, Settings, ToggleRight, FolderOpen, Pin, Copy, Check, Chrome } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -46,63 +46,63 @@ export function InstallationSection() {
   };
 
   return (
-    <section className="py-24 relative border-t border-border/40 bg-background/50" id="install">
-      <div className="container px-4 mx-auto max-w-4xl">
-        <div className="max-w-4xl mx-auto">
+    <section className="py-24 relative border-t border-white/[0.08] bg-[#05060B]" id="install">
+      <div className="container relative z-10 px-4 mx-auto max-w-4xl">
+        <div className="max-w-3xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 text-white">
               Developer Installation
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-base text-[#A7ADBE]">
               Load the hybrid unpacked extension locally in under a minute.
             </p>
           </div>
 
           {/* Steps */}
-          <div className="space-y-4 mb-12">
+          <div className="space-y-3.5 mb-12">
             {steps.map((step, index) => (
               <div 
                 key={step.title}
-                className="bg-card border border-border/80 rounded-xl p-6 flex items-start gap-4 hover:border-border hover:shadow-sm transition-all"
+                className="apple-glass apple-glass-hover rounded-2xl p-5 flex items-start gap-4"
               >
                 {/* Step number */}
-                <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 font-bold text-xs text-primary font-mono">
-                  {index + 1}
+                <div className="w-7 h-7 rounded-lg bg-[#2563FF]/15 border border-[#2563FF]/30 flex items-center justify-center shrink-0 font-bold text-xs text-[#3B82FF] font-mono mt-0.5">
+                  0{index + 1}
                 </div>
                 
                 {/* Icon */}
-                <div className="w-10 h-10 rounded-lg bg-muted border border-border/60 flex items-center justify-center shrink-0">
-                  <step.icon className="w-5 h-5 text-muted-foreground" />
+                <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center shrink-0 text-white/80">
+                  <step.icon className="w-4 h-4" />
                 </div>
                 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-bold text-sm text-foreground">{step.title}</h3>
-                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{step.description}</p>
+                  <h3 className="font-semibold text-sm text-white">{step.title}</h3>
+                  <p className="text-xs text-[#A7ADBE] mt-0.5 leading-relaxed">{step.description}</p>
                   
                   {step.code && (
                     <div className="mt-3 flex items-center gap-2">
-                      <code className="flex-1 bg-muted/60 rounded-md px-3.5 py-2 text-xs font-mono text-primary border border-border/60 overflow-x-auto select-all">
+                      <code className="flex-1 bg-black/50 rounded-lg px-3.5 py-2 text-xs font-mono text-emerald-400 border border-white/[0.08] overflow-x-auto select-all">
                         {step.code}
                       </code>
                       <Button 
                         variant="ghost" 
                         size="icon"
-                        className="shrink-0 w-8 h-8 hover:bg-muted/80"
+                        className="shrink-0 w-8 h-8 text-white/60 hover:text-white hover:bg-white/[0.08] rounded-lg"
                         onClick={copyCommand}
                       >
                         {copied ? (
-                          <Check className="w-3.5 h-3.5 text-green-500" />
+                          <Check className="w-3.5 h-3.5 text-emerald-400" />
                         ) : (
-                          <Copy className="w-3.5 h-3.5 text-muted-foreground" />
+                          <Copy className="w-3.5 h-3.5" />
                         )}
                       </Button>
                     </div>
                   )}
                   
                   {step.highlight && (
-                    <code className="mt-2.5 inline-block bg-primary/5 rounded px-2.5 py-1 text-xs font-mono text-primary border border-primary/20 select-all">
+                    <code className="mt-2.5 inline-block bg-[#2563FF]/10 rounded-md px-2.5 py-1 text-xs font-mono text-[#3B82FF] border border-[#2563FF]/20 select-all">
                       {step.highlight}
                     </code>
                   )}
@@ -115,16 +115,17 @@ export function InstallationSection() {
           <div className="text-center">
             <Button 
               size="lg" 
-              className="bg-primary text-primary-foreground font-semibold px-8 py-6 shadow-md hover:opacity-90"
+              className="h-12 px-7 text-sm font-semibold bg-white text-black hover:bg-white/90 rounded-xl transition-all shadow-[0_0_24px_rgba(255,255,255,0.15)] active:scale-98"
               asChild
             >
               <a 
-                href="https://github.com/SathwikPerla/ScrollStamp/archive/refs/heads/v2.1-hybrid.zip" 
+                href="https://chromewebstore.google.com/detail/scrollstamp/hlnolmjmfgdbaidlgkmfdpnajpemimcb" 
+                target="_blank"
                 rel="noopener noreferrer"
                 onClick={handleDownloadClick}
               >
-                <Download className="w-4 h-4 mr-2" />
-                Get Extension Zip
+                <Chrome className="w-4 h-4 mr-2 text-black/80" />
+                <span>Add to Chrome</span>
               </a>
             </Button>
           </div>

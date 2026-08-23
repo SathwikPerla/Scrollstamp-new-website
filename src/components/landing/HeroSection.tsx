@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react";
-import { Star, Download, MessageSquare, Globe, Sparkles, Terminal, Eye } from "lucide-react";
+import { Star, MessageSquare, Globe, Eye, Chrome, Bookmark, ArrowUpRight, Check, Hash, Sparkles, Layers, ShieldCheck, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const platforms = [
-  { name: "ChatGPT", color: "from-emerald-400 to-teal-500" },
-  { name: "Claude", color: "from-orange-400 to-amber-500" },
-  { name: "Gemini", color: "from-blue-400 to-indigo-500" },
-  { name: "Perplexity", color: "from-cyan-400 to-teal-500" },
-  { name: "Grok", color: "from-slate-200 to-zinc-400" },
-  { name: "DeepSeek", color: "from-blue-500 to-sky-400" },
+  { name: "ChatGPT", dot: "bg-[#10a37f]" },
+  { name: "Claude", dot: "bg-[#da7756]" },
+  { name: "Gemini", dot: "bg-[#4a88f7]" },
+  { name: "Perplexity", dot: "bg-[#22b8cf]" },
+  { name: "Grok", dot: "bg-slate-300" },
+  { name: "DeepSeek", dot: "bg-[#3b82f6]" },
 ];
 
 export function HeroSection() {
   const [visits, setVisits] = useState<number | null>(null);
   const [downloads, setDownloads] = useState<number | null>(null);
+  const [activeTab, setActiveTab] = useState<number>(0);
 
   useEffect(() => {
     // Only increment visits count once per page load session
@@ -61,126 +63,257 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-32 pb-20 dot-grid">
-      {/* Subtle fade overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background pointer-events-none" />
-      
-      {/* Developer spot light glow */}
-      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-primary/5 dark:bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
-      
-      <div className="container relative z-10 px-4 mx-auto max-w-6xl">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Logo container */}
-          <div className="mb-6 animate-fade-in-up flex justify-center">
-            <img 
-              src="/favicon.png" 
-              alt="ScrollStamp" 
-              className="w-16 h-16 object-contain rounded-2xl"
-            />
-          </div>
+    <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden border-b border-white/[0.06]">
+      {/* Background Architectural Grid & Subtle Radial Glow (Restrained) */}
+      <div className="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-40" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-gradient-to-b from-blue-500/10 via-primary/5 to-transparent rounded-full blur-[140px] pointer-events-none" />
 
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-muted/40 text-xs font-semibold mb-6 animate-fade-in-up animation-delay-100 text-muted-foreground shadow-sm">
-            <span>v2.1 Hybrid Release</span>
-            <span className="text-border">•</span>
-            <span>Chrome Extension</span>
+      <div className="container relative z-10 px-4 sm:px-6 mx-auto max-w-6xl">
+        {/* Top Announcement Pill */}
+        <div className="flex justify-center mb-8">
+          <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-[11px] font-medium text-white/70 shadow-sm backdrop-blur-md">
+            <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-mono text-white/90">v2.1 Hybrid</span>
+            <span className="text-white/20">|</span>
+            <span className="text-white/60">Chrome Extension for Deep AI Sessions</span>
           </div>
+        </div>
 
-          {/* Headline */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-6 animate-fade-in-up animation-delay-200">
-            Never Lose Your Response
-            <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-blue-500 to-indigo-400">
-              In AI Conversations
-            </span>
+        {/* Hero Title & Subheading - Apple & Linear Precision Typography */}
+        <div className="max-w-4xl mx-auto text-center mb-10">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-[-0.035em] text-white leading-[1.08] mb-6">
+            Never lose your place in an{" "}
+            <span className="text-white/40 italic font-serif">AI conversation.</span>
           </h1>
 
-          {/* Subheadline */}
-          <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-fade-in-up animation-delay-300 leading-relaxed">
-            A developer-focused bookmarking tool for AI chats and code sessions. 
-            Pin critical instructions. Return instantly with one click.
+          <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed font-normal">
+            Bookmark exact prompt instructions, code generations, and architectural decisions inside long threads. Return instantly with one click.
           </p>
+        </div>
 
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10 animate-fade-in-up animation-delay-400">
-            <Button 
-              size="lg" 
-              className="text-sm font-semibold px-8 py-6 bg-primary text-primary-foreground hover:opacity-90 shadow-lg border border-primary/20"
-              asChild
+        {/* Primary CTAs & Social Proof */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-14">
+          <Button 
+            size="lg" 
+            className="h-12 px-7 text-sm font-semibold bg-white text-black hover:bg-white/90 rounded-xl transition-all shadow-[0_0_24px_rgba(255,255,255,0.15)] active:scale-98 group"
+            asChild
+          >
+            <a 
+              href="https://chromewebstore.google.com/detail/scrollstamp/hlnolmjmfgdbaidlgkmfdpnajpemimcb" 
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={handleDownloadClick}
             >
-              <a 
-                href="https://github.com/SathwikPerla/ScrollStamp/archive/refs/heads/v2.1-hybrid.zip" 
-                rel="noopener noreferrer"
-                onClick={handleDownloadClick}
-              >
-                <Download className="w-4 h-4 mr-2" />
-                Get ScrollStamp Free
-              </a>
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="text-sm font-semibold px-8 py-6 border-border hover:bg-muted/40 transition-all bg-background/50"
-              asChild
-            >
-              <a href="https://github.com/SathwikPerla/ScrollStamp/tree/v2.1-hybrid" target="_blank" rel="noopener noreferrer">
-                <Star className="w-4 h-4 mr-2 text-amber-500 fill-amber-500" />
-                Star on GitHub
-              </a>
-            </Button>
-          </div>
+              <Chrome className="w-4 h-4 mr-2 text-black/80 group-hover:scale-105 transition-transform" />
+              <span>Add to Chrome</span>
+              <span className="text-[10px] font-mono ml-2 py-0.5 px-1.5 rounded bg-black/10 text-black/70">Free</span>
+            </a>
+          </Button>
 
-          {/* Live Stats Badge */}
-          {(visits !== null || downloads !== null) && (
-            <div className="inline-flex items-center gap-6 px-4 py-2 rounded-full border border-border bg-card/50 text-[11px] font-mono mb-16 animate-fade-in-up animation-delay-450 text-muted-foreground select-none">
+          <Button 
+            size="lg" 
+            variant="outline" 
+            className="h-12 px-6 text-sm font-medium bg-white/[0.03] hover:bg-white/[0.07] border-white/[0.1] text-white/90 hover:text-white rounded-xl transition-all active:scale-98"
+            asChild
+          >
+            <a href="https://github.com/SathwikPerla/ScrollStamp/tree/v2.1-hybrid" target="_blank" rel="noopener noreferrer">
+              <Star className="w-3.5 h-3.5 mr-2 fill-amber-400/90 text-amber-400" />
+              <span>Star on GitHub</span>
+              <ArrowUpRight className="w-3.5 h-3.5 ml-1 opacity-50" />
+            </a>
+          </Button>
+        </div>
+
+        {/* Telemetry Stats Bar - Minimal Linear Badge */}
+        {(visits !== null || downloads !== null) && (
+          <div className="flex justify-center mb-16">
+            <div className="inline-flex items-center gap-4 px-4 py-1.5 rounded-full bg-white/[0.02] border border-white/[0.06] text-[11px] font-mono text-white/50">
               {visits !== null && (
                 <span className="flex items-center gap-1.5">
-                  <Eye className="w-3.5 h-3.5 text-blue-400" />
-                  Total Visits: <strong className="text-foreground">{visits.toLocaleString()}</strong>
+                  <Eye className="w-3 h-3 text-sky-400" />
+                  <span className="text-white/40">Visits:</span>
+                  <span className="text-white/80 font-semibold">{visits.toLocaleString()}</span>
                 </span>
               )}
               {visits !== null && downloads !== null && (
-                <span className="text-border">|</span>
+                <span className="text-white/10">•</span>
               )}
               {downloads !== null && (
                 <span className="flex items-center gap-1.5">
-                  <Download className="w-3.5 h-3.5 text-emerald-400" />
-                  Total Downloads: <strong className="text-foreground">{downloads.toLocaleString()}</strong>
+                  <Chrome className="w-3 h-3 text-emerald-400" />
+                  <span className="text-white/40">Installs / Downloads:</span>
+                  <span className="text-white/80 font-semibold">{downloads.toLocaleString()}</span>
                 </span>
               )}
             </div>
-          )}
+          </div>
+        )}
 
-          {/* Platform badges */}
-          <div className="animate-fade-in-up animation-delay-500 bg-card/30 border border-border/40 rounded-2xl p-6 max-w-3xl mx-auto">
-            <p className="text-xs uppercase tracking-wider text-muted-foreground font-bold mb-4">
-              Works seamlessly with
-            </p>
-            <div className="flex flex-wrap justify-center gap-2.5">
-              {platforms.map((platform) => (
-                <div 
-                  key={platform.name}
-                  className="px-3.5 py-1.5 rounded-lg border border-border/80 bg-background/60 text-xs font-semibold hover:border-primary/50 transition-colors cursor-default"
-                >
-                  <span className={`bg-gradient-to-r ${platform.color} bg-clip-text text-transparent`}>
-                    {platform.name}
-                  </span>
-                </div>
-              ))}
+        {/* HERO PRODUCT CENTERPIECE: Realistic AI Workspace Mockup with ScrollStamp In Action */}
+        <div className="relative max-w-5xl mx-auto rounded-2xl border border-white/[0.12] bg-[#0c0d14]/90 backdrop-blur-2xl shadow-[0_24px_80px_rgba(0,0,0,0.6)] overflow-hidden">
+          {/* Mock Browser Titlebar */}
+          <div className="px-4 py-3 bg-white/[0.02] border-b border-white/[0.08] flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="flex gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
+              </div>
+              <div className="hidden sm:flex items-center gap-2 ml-4 px-3 py-1 rounded-md bg-white/[0.03] border border-white/[0.06] text-[11px] font-mono text-white/50">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80" />
+                <span>chatgpt.com/c/arch-revamp-v2</span>
+              </div>
+            </div>
+
+            {/* Browser Right: Extension Installed Pin Icon */}
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.06] border border-white/[0.12] text-[10px] font-mono text-white/90">
+                <Bookmark className="w-3 h-3 text-amber-400 fill-amber-400" />
+                <span>ScrollStamp Active</span>
+                <span className="px-1 py-0.2 rounded bg-amber-500/20 text-amber-300 text-[9px]">3 Bookmarks</span>
+              </div>
             </div>
           </div>
 
-          {/* Mode indicators */}
-          <div className="flex justify-center gap-8 mt-10 animate-fade-in-up animation-delay-500">
-            <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-              <div className="w-2 h-2 rounded-full bg-primary" />
-              <MessageSquare className="w-3.5 h-3.5" />
-              <span>AI Chat Mode</span>
+          {/* Product Interface Body: Sidebar + Chat Stream */}
+          <div className="grid md:grid-cols-12 min-h-[380px]">
+            {/* ScrollStamp HUD Panel (Left 4 cols) */}
+            <div className="md:col-span-4 p-4 border-b md:border-b-0 md:border-r border-white/[0.08] bg-black/20 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3 px-1">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-white/40 font-semibold">
+                    Saved Checkpoints
+                  </span>
+                  <span className="text-[10px] font-mono text-white/30">Jump in 1-Click</span>
+                </div>
+
+                <div className="space-y-2">
+                  {[
+                    { id: 0, title: "Auth Middleware & Token Flow", time: "2 min ago", tag: "Critical Config", active: activeTab === 0 },
+                    { id: 1, title: "PostgreSQL Schema Definition", time: "14 min ago", tag: "Database", active: activeTab === 1 },
+                    { id: 2, title: "Deploy Script & Environment Vars", time: "1 hr ago", tag: "DevOps", active: activeTab === 2 },
+                  ].map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveTab(item.id)}
+                      className={cn(
+                        "w-full text-left p-2.5 rounded-xl border transition-all duration-150 flex items-start gap-2.5",
+                        item.active 
+                          ? "bg-white/[0.08] border-white/[0.2] shadow-sm text-white" 
+                          : "bg-white/[0.02] border-white/[0.05] hover:bg-white/[0.04] text-white/60 hover:text-white/80"
+                      )}
+                    >
+                      <div className={cn(
+                        "w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5 border text-[11px]",
+                        item.active 
+                          ? "bg-amber-400/20 border-amber-400/40 text-amber-300" 
+                          : "bg-white/[0.04] border-white/[0.08] text-white/40"
+                      )}>
+                        <Bookmark className="w-3 h-3 fill-current" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-1">
+                          <p className="text-xs font-medium truncate">{item.title}</p>
+                        </div>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-white/[0.05] text-white/50 border border-white/[0.06]">
+                            {item.tag}
+                          </span>
+                          <span className="text-[9px] font-mono text-white/40">{item.time}</span>
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bottom Quick Feature Callout */}
+              <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-white/40 px-1">
+                <span>Indexed locally</span>
+                <span className="text-emerald-400/90 flex items-center gap-1">
+                  <ShieldCheck className="w-3 h-3" /> 100% Private
+                </span>
+              </div>
             </div>
-            <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-              <div className="w-2 h-2 rounded-full bg-accent" />
-              <Globe className="w-3.5 h-3.5" />
-              <span>Scroll Mode (Any Site)</span>
+
+            {/* Chat Stream Viewport (Right 8 cols) */}
+            <div className="md:col-span-8 p-5 sm:p-6 bg-gradient-to-b from-transparent to-black/30 flex flex-col justify-between space-y-4">
+              {/* Previous chat messages (faded) */}
+              <div className="space-y-3 opacity-40 select-none">
+                <div className="flex items-center gap-2 text-xs font-mono text-white/40">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400/60" /> User prompt · #Step 04
+                </div>
+                <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] text-xs font-mono text-white/50">
+                  How should we configure the session expiration refresh tokens?
+                </div>
+              </div>
+
+              {/* Active Bookmarked Target Message - Highlighted with ScrollStamp Flag */}
+              <div className="relative p-4 rounded-xl bg-white/[0.04] border border-white/[0.14] shadow-lg">
+                {/* Floating Pin Indicator from ScrollStamp */}
+                <div className="absolute -top-3 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-400 text-black font-semibold text-[10px] font-mono shadow-md">
+                  <Bookmark className="w-3 h-3 fill-black" />
+                  <span>Pinned Checkpoint</span>
+                </div>
+
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[11px] font-semibold text-white/90">Claude 3.7 Sonnet</span>
+                  <span className="text-[10px] font-mono text-white/40">· Instruction Block</span>
+                </div>
+
+                <div className="p-3 rounded-lg bg-[#08090d] border border-white/[0.08] font-mono text-xs text-white/80 space-y-1 overflow-x-auto">
+                  <div className="text-white/40">// In src/middleware/auth.ts</div>
+                  <div className="text-sky-300">export const verifyAuthSession = async (req, res) =&gt; &#123;</div>
+                  <div className="text-white/70 pl-4">const token = req.headers.authorization?.split(' ')[1];</div>
+                  <div className="text-emerald-400/90 pl-4">return validateSignedToken(token, SECRET_KEY);</div>
+                  <div className="text-sky-300">&#125;;</div>
+                </div>
+
+                <p className="text-[11px] text-white/50 mt-2.5">
+                  Clicking the checkpoint on the left instantly animates the window directly back to this specific response block.
+                </p>
+              </div>
+
+              {/* Supported Platforms Strip inside mockup */}
+              <div className="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-white/[0.06]">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-white/40">
+                  Integrated Directly In
+                </span>
+                <div className="flex items-center gap-2">
+                  {platforms.map((p) => (
+                    <div 
+                      key={p.name}
+                      className="flex items-center gap-1 px-2 py-0.5 rounded bg-white/[0.03] border border-white/[0.06] text-[10px] font-mono text-white/60"
+                    >
+                      <span className={cn("w-1.5 h-1.5 rounded-full", p.dot)} />
+                      <span>{p.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Dual Mode Sub-cards (Apple/Linear feature pills) */}
+        <div className="grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto mt-8">
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center gap-3.5">
+            <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
+              <MessageSquare className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-white/90">AI Chat Mode (v2)</p>
+              <p className="text-[11px] text-white/50">Message-level DOM tracking for ChatGPT, Claude, Gemini & more.</p>
+            </div>
+          </div>
+
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center gap-3.5">
+            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+              <Globe className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-white/90">Scroll Mode (Any Website)</p>
+              <p className="text-[11px] text-white/50">Exact pixel-accurate checkpoints on docs, articles, and repos.</p>
             </div>
           </div>
         </div>
