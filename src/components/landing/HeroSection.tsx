@@ -73,7 +73,7 @@ export function HeroSection() {
         <div className="flex justify-center mb-8">
           <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-[11px] font-medium text-white/70 shadow-sm backdrop-blur-md">
             <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-mono text-white/90">v2.1 Hybrid</span>
+            <span className="font-mono text-white/90">v2.3.0 Hybrid</span>
             <span className="text-white/20">|</span>
             <span className="text-white/60">Chrome Extension for Deep AI Sessions</span>
           </div>

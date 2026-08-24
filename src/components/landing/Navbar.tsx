@@ -48,7 +48,7 @@ export function Navbar() {
                 ScrollStamp
               </span>
               <span className="hidden sm:inline-block text-[10px] font-mono font-medium px-1.5 py-0.5 rounded-md bg-white/[0.05] border border-white/[0.08] text-white/50 tracking-wider">
-                v2.1
+                v2.3.0
               </span>
             </div>
           </a>
