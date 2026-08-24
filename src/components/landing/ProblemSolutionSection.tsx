@@ -227,7 +227,7 @@ export function ProblemSolutionSection() {
 
               <div className="p-3.5 rounded-xl bg-[#2563FF]/10 border border-[#2563FF]/20 flex items-center justify-between">
                 <p className="text-xs font-semibold text-white font-mono">
-                  Pin it. Find it. Stay focused. Every time.
+                  Select text. Bookmark it. Jump back in one click.
                 </p>
                 <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">
                   100% Local
