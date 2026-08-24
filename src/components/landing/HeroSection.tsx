@@ -295,24 +295,51 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Dual Mode Sub-cards (Apple/Linear feature pills) */}
+        {/* Dual Mode Sub-cards (Custom Handcrafted Vector Graphics) */}
         <div className="grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto mt-8">
-          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center gap-3.5">
-            <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
-              <MessageSquare className="w-4 h-4" />
+          <div className="group p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-blue-500/30 hover:shadow-[0_0_20px_rgba(37,99,255,0.15)] flex items-center gap-3.5 transition-all duration-300">
+            <div className="shrink-0 p-1 rounded-lg bg-black/40 border border-white/10 group-hover:scale-105 transition-transform duration-200">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="28" height="28" rx="7" fill="url(#hero-ai-bg)" />
+                <path d="M14 5L16.2 10.8L22 13L16.2 15.2L14 21L11.8 15.2L6 13L11.8 10.8L14 5Z" fill="url(#hero-ai-sparkle)" />
+                <circle cx="21" cy="20" r="2" fill="#93C5FD" />
+                <defs>
+                  <linearGradient id="hero-ai-bg" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#1E3A8A" stopOpacity="0.7" />
+                    <stop offset="1" stopColor="#1D4ED8" stopOpacity="0.9" />
+                  </linearGradient>
+                  <linearGradient id="hero-ai-sparkle" x1="6" y1="5" x2="22" y2="21" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#93C5FD" />
+                    <stop offset="1" stopColor="#3B82F6" />
+                  </linearGradient>
+                </defs>
+              </svg>
             </div>
             <div>
-              <p className="text-xs font-semibold text-white/90">AI Chat Mode (v2)</p>
+              <p className="text-xs font-semibold text-white/90 group-hover:text-white transition-colors">AI Chat Mode (v2)</p>
               <p className="text-[11px] text-white/50">Message-level DOM tracking for ChatGPT, Claude, Gemini & more.</p>
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center gap-3.5">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
-              <Globe className="w-4 h-4" />
+          <div className="group p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-emerald-500/30 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] flex items-center gap-3.5 transition-all duration-300">
+            <div className="shrink-0 p-1 rounded-lg bg-black/40 border border-white/10 group-hover:scale-105 transition-transform duration-200">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="28" height="28" rx="7" fill="url(#hero-scroll-bg)" />
+                <rect x="5" y="5" width="18" height="18" rx="3.5" stroke="#34D399" strokeWidth="1.5" fill="none" />
+                <line x1="5" y1="10" x2="23" y2="10" stroke="#34D399" strokeWidth="1" strokeDasharray="1.5 1.5" />
+                <circle cx="8.5" cy="7.5" r="1" fill="#A7F3D0" />
+                <circle cx="11.5" cy="7.5" r="1" fill="#6EE7B7" />
+                <circle cx="18.5" cy="14" r="2" fill="#34D399" />
+                <defs>
+                  <linearGradient id="hero-scroll-bg" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#064E3B" stopOpacity="0.7" />
+                    <stop offset="1" stopColor="#047857" stopOpacity="0.9" />
+                  </linearGradient>
+                </defs>
+              </svg>
             </div>
             <div>
-              <p className="text-xs font-semibold text-white/90">Scroll Mode (Any Website)</p>
+              <p className="text-xs font-semibold text-white/90 group-hover:text-white transition-colors">Scroll Mode (Any Website)</p>
               <p className="text-[11px] text-white/50">Exact pixel-accurate checkpoints on docs, articles, and repos.</p>
             </div>
           </div>
@@ -321,3 +348,4 @@ export function HeroSection() {
     </section>
   );
 }
+
