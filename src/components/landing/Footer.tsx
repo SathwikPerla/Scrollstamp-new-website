@@ -14,7 +14,7 @@ export function Footer() {
               </div>
               <span className="font-semibold text-sm tracking-tight text-white">ScrollStamp</span>
               <span className="px-2 py-0.5 rounded-md bg-white/[0.05] text-[#A7ADBE] text-[10px] font-mono border border-white/[0.08]">
-                v2.1
+                v2.3.0
               </span>
             </div>
 
