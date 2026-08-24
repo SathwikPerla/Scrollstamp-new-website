@@ -35,40 +35,44 @@ function CustomCheckSvg() {
 
 function AiCodingChipSvg() {
   return (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4.5 3.5L1.5 7.5L4.5 11.5" stroke="#60A5FA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M10.5 3.5L13.5 7.5L10.5 11.5" stroke="#60A5FA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <line x1="9" y1="2.5" x2="6" y2="12.5" stroke="#93C5FD" strokeWidth="1.2" strokeLinecap="round" />
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="14" height="14" rx="4" fill="#1E3A8A" fillOpacity="0.4" stroke="#3B82F6" strokeWidth="1.2" />
+      <path d="M5.5 6L3.5 9L5.5 12" stroke="#60A5FA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12.5 6L14.5 9L12.5 12" stroke="#60A5FA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <line x1="10.5" y1="5" x2="7.5" y2="13" stroke="#93C5FD" strokeWidth="1.2" strokeLinecap="round" />
     </svg>
   );
 }
 
 function DebuggingChipSvg() {
   return (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="2.5" y="2.5" width="10" height="10" rx="2.5" fill="#311042" stroke="#A855F7" strokeWidth="1.2" />
-      <circle cx="7.5" cy="7.5" r="2" fill="#C084FC" />
-      <path d="M0.5 7.5H2.5" stroke="#C084FC" strokeWidth="1.2" strokeLinecap="round" />
-      <path d="M12.5 7.5H14.5" stroke="#C084FC" strokeWidth="1.2" strokeLinecap="round" />
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="14" height="14" rx="4" fill="#3B0764" fillOpacity="0.4" stroke="#A855F7" strokeWidth="1.2" />
+      <path d="M5.5 6.5L8 9L5.5 11.5" stroke="#C084FC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <line x1="9.5" y1="11.5" x2="12.5" y2="11.5" stroke="#E9D5FF" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="12" cy="6" r="1.2" fill="#F43F5E" />
     </svg>
   );
 }
 
 function ResearchChipSvg() {
   return (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="6.5" cy="6.5" r="4" stroke="#34D399" strokeWidth="1.5" />
-      <path d="M9.5 9.5L13" stroke="#6EE7B7" strokeWidth="1.8" strokeLinecap="round" />
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="14" height="14" rx="4" fill="#064E3B" fillOpacity="0.4" stroke="#10B981" strokeWidth="1.2" />
+      <circle cx="8" cy="8" r="3.5" stroke="#34D399" strokeWidth="1.5" />
+      <path d="M10.5 10.5L14 14" stroke="#6EE7B7" strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="8" cy="8" r="1" fill="#A7F3D0" />
     </svg>
   );
 }
 
 function DocsChipSvg() {
   return (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3 3C3 2.17157 3.67157 1.5 4.5 1.5H10.5L13 4V12C13 12.8284 12.3284 13.5 11.5 13.5H4.5C3.67157 13.5 3 12.8284 3 12V3Z" fill="#78350F" fillOpacity="0.4" stroke="#F59E0B" strokeWidth="1.2" />
-      <path d="M5.5 5.5H10.5" stroke="#FBBF24" strokeWidth="1.2" strokeLinecap="round" />
-      <path d="M5.5 8.5H9.5" stroke="#FBBF24" strokeWidth="1.2" strokeLinecap="round" />
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="14" height="14" rx="4" fill="#78350F" fillOpacity="0.4" stroke="#F59E0B" strokeWidth="1.2" />
+      <path d="M5.5 5.5H12.5" stroke="#FBBF24" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M5.5 9H12.5" stroke="#FBBF24" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
+      <path d="M5.5 12.5H9.5" stroke="#FBBF24" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
     </svg>
   );
 }
