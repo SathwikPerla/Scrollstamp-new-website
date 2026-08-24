@@ -184,33 +184,41 @@ const modes = [
     name: "AI Chat Mode",
     version: "v2",
     HeaderGraphic: AiModeHeaderGraphic,
-    activeBtn: "bg-gradient-to-r from-[#2563FF] to-[#3B82F6] text-white shadow-[0_4px_20px_rgba(37,99,255,0.45)]",
-    badgeStyle: "bg-blue-500/15 border-blue-500/30 text-blue-400 shadow-[0_0_16px_rgba(37,99,255,0.25)]",
+    activeBtn: "bg-gradient-to-r from-[#2563FF] to-[#3B82F6] text-white shadow-sm",
+    badgeStyle: "bg-blue-500/15 border-blue-500/30 text-blue-400",
     description: "Message-level DOM tracking designed specifically for AI conversations",
     features: [
       { 
         Graphic: CheckpointsGraphic, 
         title: "Message Checkpoints", 
+        badge: "DOM Level",
         desc: "Save specific AI responses, not just scroll positions",
-        cardBorder: "hover:border-cyan-500/40 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]"
+        cardBorder: "hover:border-white/[0.12]",
+        badgeStyle: "bg-cyan-500/10 text-cyan-300 border-cyan-500/30"
       },
       { 
         Graphic: SmartDetectionGraphic, 
         title: "Smart Detection", 
+        badge: "Auto Boundaries",
         desc: "Automatically identifies message boundaries across models",
-        cardBorder: "hover:border-indigo-500/40 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)]"
+        cardBorder: "hover:border-white/[0.12]",
+        badgeStyle: "bg-indigo-500/10 text-indigo-300 border-indigo-500/30"
       },
       { 
         Graphic: StorageGraphic, 
         title: "Persistent Storage", 
+        badge: "IndexedDB Local",
         desc: "Bookmarks survive page refreshes and session restarts",
-        cardBorder: "hover:border-blue-500/40 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)]"
+        cardBorder: "hover:border-white/[0.12]",
+        badgeStyle: "bg-blue-500/10 text-blue-300 border-blue-500/30"
       },
       { 
         Graphic: HudGraphic, 
         title: "Visual HUD Feedback", 
+        badge: "Live Overlay",
         desc: "Clear indicator badges attached to saved messages",
-        cardBorder: "hover:border-sky-500/40 hover:shadow-[0_0_20px_rgba(14,165,233,0.15)]"
+        cardBorder: "hover:border-white/[0.12]",
+        badgeStyle: "bg-sky-500/10 text-sky-300 border-sky-500/30"
       },
     ]
   },
@@ -219,33 +227,41 @@ const modes = [
     name: "Scroll Mode",
     version: "v1",
     HeaderGraphic: ScrollModeHeaderGraphic,
-    activeBtn: "bg-gradient-to-r from-[#8B5CF6] to-[#A855F7] text-white shadow-[0_4px_20px_rgba(139,92,246,0.45)]",
-    badgeStyle: "bg-purple-500/15 border-purple-500/30 text-purple-400 shadow-[0_0_16px_rgba(139,92,246,0.25)]",
+    activeBtn: "bg-gradient-to-r from-[#8B5CF6] to-[#A855F7] text-white shadow-sm",
+    badgeStyle: "bg-purple-500/15 border-purple-500/30 text-purple-400",
     description: "Position-based bookmarking that works across any website or doc",
     features: [
       { 
         Graphic: UniversalWebGraphic, 
         title: "Universal Web Support", 
+        badge: "All Domains",
         desc: "Works on blogs, articles, API docs, and code repos",
-        cardBorder: "hover:border-purple-500/40 hover:shadow-[0_0_20px_rgba(168,85,247,0.15)]"
+        cardBorder: "hover:border-white/[0.12]",
+        badgeStyle: "bg-purple-500/10 text-purple-300 border-purple-500/30"
       },
       { 
         Graphic: PixelAccurateGraphic, 
         title: "Pixel-Accurate Positioning", 
+        badge: "Y: ±0px",
         desc: "Returns to exact pixel scroll coordinates",
-        cardBorder: "hover:border-emerald-500/40 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]"
+        cardBorder: "hover:border-white/[0.12]",
+        badgeStyle: "bg-emerald-500/10 text-emerald-300 border-emerald-500/30"
       },
       { 
         Graphic: ContextSnippetsGraphic, 
         title: "Context Snippets", 
+        badge: "Text Preview",
         desc: "Saves text previews for rapid identification",
-        cardBorder: "hover:border-teal-500/40 hover:shadow-[0_0_20px_rgba(20,184,166,0.15)]"
+        cardBorder: "hover:border-white/[0.12]",
+        badgeStyle: "bg-teal-500/10 text-teal-300 border-teal-500/30"
       },
       { 
         Graphic: VisualPinGraphic, 
         title: "Visual Pin Marker", 
+        badge: "Inline Flag",
         desc: "See exactly where you left off reading",
-        cardBorder: "hover:border-violet-500/40 hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]"
+        cardBorder: "hover:border-white/[0.12]",
+        badgeStyle: "bg-violet-500/10 text-violet-300 border-violet-500/30"
       },
     ]
   }
@@ -255,26 +271,34 @@ const coreFeatures = [
   { 
     Graphic: OneClickGraphic, 
     title: "One-Click Bookmarking", 
+    badge: "1-Click Pin",
     desc: "Pin important prompts & responses instantly",
-    cardBorder: "hover:border-amber-500/40 hover:shadow-[0_0_20px_rgba(245,158,11,0.15)]" 
+    cardBorder: "hover:border-white/[0.12]",
+    badgeStyle: "bg-amber-500/10 text-amber-300 border-amber-500/30" 
   },
   { 
     Graphic: VisualFeedbackGraphic, 
     title: "Visual Feedback", 
+    badge: "Status Toast",
     desc: "Clear confirmation when checkpoints save",
-    cardBorder: "hover:border-emerald-500/40 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]" 
+    cardBorder: "hover:border-white/[0.12]",
+    badgeStyle: "bg-emerald-500/10 text-emerald-300 border-emerald-500/30" 
   },
   { 
     Graphic: EditableTitlesGraphic, 
     title: "Editable Titles", 
+    badge: "Custom Labels",
     desc: "Rename bookmarks for easy project indexing",
-    cardBorder: "hover:border-blue-500/40 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)]" 
+    cardBorder: "hover:border-white/[0.12]",
+    badgeStyle: "bg-blue-500/10 text-blue-300 border-blue-500/30" 
   },
   { 
     Graphic: LocalPrivacyGraphic, 
     title: "100% Local Privacy", 
+    badge: "0 KB Egress",
     desc: "All data stays stored inside your browser",
-    cardBorder: "hover:border-purple-500/40 hover:shadow-[0_0_20px_rgba(168,85,247,0.15)]" 
+    cardBorder: "hover:border-white/[0.12]",
+    badgeStyle: "bg-purple-500/10 text-purple-300 border-purple-500/30" 
   },
 ];
 
@@ -355,9 +379,14 @@ export function FeaturesSection() {
                   <div className="shrink-0 mt-0.5 p-1 rounded-lg bg-black/40 border border-white/10 group-hover:scale-105 transition-transform duration-200">
                     <feature.Graphic />
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-xs text-white group-hover:text-white transition-colors">{feature.title}</h4>
-                    <p className="text-[11px] text-[#A7ADBE] mt-1 leading-relaxed">{feature.desc}</p>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <h4 className="font-semibold text-xs text-white group-hover:text-white transition-colors truncate">{feature.title}</h4>
+                      <span className={cn("text-[9px] font-mono px-1.5 py-0.2 rounded border shrink-0 font-medium", feature.badgeStyle)}>
+                        {feature.badge}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[#A7ADBE] leading-relaxed">{feature.desc}</p>
                   </div>
                 </div>
               ))}
@@ -370,15 +399,22 @@ export function FeaturesSection() {
               <div 
                 key={feature.title}
                 className={cn(
-                  "group apple-glass apple-glass-hover rounded-xl p-5 border border-white/[0.06] transition-all duration-300",
+                  "group apple-glass apple-glass-hover rounded-xl p-5 border border-white/[0.06] flex flex-col justify-between transition-all duration-300",
                   feature.cardBorder
                 )}
               >
-                <div className="shrink-0 mb-3.5 inline-block p-1 rounded-lg bg-black/40 border border-white/10 group-hover:scale-105 transition-transform duration-200">
-                  <feature.Graphic />
+                <div>
+                  <div className="flex items-center justify-between mb-3.5">
+                    <div className="shrink-0 p-1 rounded-lg bg-black/40 border border-white/10 group-hover:scale-105 transition-transform duration-200">
+                      <feature.Graphic />
+                    </div>
+                    <span className={cn("text-[8.5px] font-mono px-1.5 py-0.2 rounded border font-medium", feature.badgeStyle)}>
+                      {feature.badge}
+                    </span>
+                  </div>
+                  <h4 className="font-semibold text-xs text-white mb-1 group-hover:text-white transition-colors">{feature.title}</h4>
+                  <p className="text-[11px] text-[#A7ADBE] leading-relaxed">{feature.desc}</p>
                 </div>
-                <h4 className="font-semibold text-xs text-white mb-1 group-hover:text-white transition-colors">{feature.title}</h4>
-                <p className="text-[11px] text-[#A7ADBE] leading-relaxed">{feature.desc}</p>
               </div>
             ))}
           </div>

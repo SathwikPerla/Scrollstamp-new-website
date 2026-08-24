@@ -295,52 +295,79 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Dual Mode Sub-cards (Custom Handcrafted Vector Graphics) */}
-        <div className="grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto mt-8">
-          <div className="group p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-blue-500/30 hover:shadow-[0_0_20px_rgba(37,99,255,0.15)] flex items-center gap-3.5 transition-all duration-300">
-            <div className="shrink-0 p-1 rounded-lg bg-black/40 border border-white/10 group-hover:scale-105 transition-transform duration-200">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="28" height="28" rx="7" fill="url(#hero-ai-bg)" />
-                <path d="M14 5L16.2 10.8L22 13L16.2 15.2L14 21L11.8 15.2L6 13L11.8 10.8L14 5Z" fill="url(#hero-ai-sparkle)" />
-                <circle cx="21" cy="20" r="2" fill="#93C5FD" />
-                <defs>
-                  <linearGradient id="hero-ai-bg" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#1E3A8A" stopOpacity="0.7" />
-                    <stop offset="1" stopColor="#1D4ED8" stopOpacity="0.9" />
-                  </linearGradient>
-                  <linearGradient id="hero-ai-sparkle" x1="6" y1="5" x2="22" y2="21" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#93C5FD" />
-                    <stop offset="1" stopColor="#3B82F6" />
-                  </linearGradient>
-                </defs>
-              </svg>
+        {/* Dual Mode Feature Showcase (Linear/Apple Interactive Widget Style) */}
+        <div className="grid md:grid-cols-2 gap-5 max-w-4xl mx-auto mt-10">
+          {/* AI Chat Mode Widget */}
+          <div className="group relative rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-6 border border-white/[0.08] hover:border-white/[0.14] transition-all duration-300 overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl pointer-events-none transition-all duration-300" />
+
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold text-xs shadow-inner">
+                  <span className="text-blue-400 font-mono">v2</span>
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white tracking-tight">AI Chat Mode</h3>
+                  <p className="text-[10px] font-mono text-white/50">Message-Level DOM Indexing</p>
+                </div>
+              </div>
+              <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-300">
+                Active HUD
+              </span>
             </div>
-            <div>
-              <p className="text-xs font-semibold text-white/90 group-hover:text-white transition-colors">AI Chat Mode (v2)</p>
-              <p className="text-[11px] text-white/50">Message-level DOM tracking for ChatGPT, Claude, Gemini & more.</p>
+
+            <p className="text-xs text-white/60 leading-relaxed mb-5">
+              Tracks specific prompt & response blocks directly inside ChatGPT, Claude, Gemini, Perplexity, DeepSeek, and Grok.
+            </p>
+
+            {/* Micro UI Demonstration Badge */}
+            <div className="p-3 rounded-xl bg-black/50 border border-white/[0.08] space-y-2 font-mono text-[10px]">
+              <div className="flex items-center justify-between text-white/40 pb-1.5 border-b border-white/[0.06]">
+                <span>Target: DOM Node #msg-41</span>
+                <span className="text-emerald-400 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" /> Pinned
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-white/80">
+                <span className="truncate max-w-[200px] text-blue-300">"export const authConfig..."</span>
+                <span className="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">Jump in 1-Click</span>
+              </div>
             </div>
           </div>
 
-          <div className="group p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-emerald-500/30 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] flex items-center gap-3.5 transition-all duration-300">
-            <div className="shrink-0 p-1 rounded-lg bg-black/40 border border-white/10 group-hover:scale-105 transition-transform duration-200">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="28" height="28" rx="7" fill="url(#hero-scroll-bg)" />
-                <rect x="5" y="5" width="18" height="18" rx="3.5" stroke="#34D399" strokeWidth="1.5" fill="none" />
-                <line x1="5" y1="10" x2="23" y2="10" stroke="#34D399" strokeWidth="1" strokeDasharray="1.5 1.5" />
-                <circle cx="8.5" cy="7.5" r="1" fill="#A7F3D0" />
-                <circle cx="11.5" cy="7.5" r="1" fill="#6EE7B7" />
-                <circle cx="18.5" cy="14" r="2" fill="#34D399" />
-                <defs>
-                  <linearGradient id="hero-scroll-bg" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#064E3B" stopOpacity="0.7" />
-                    <stop offset="1" stopColor="#047857" stopOpacity="0.9" />
-                  </linearGradient>
-                </defs>
-              </svg>
+          {/* Scroll Mode Widget */}
+          <div className="group relative rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-6 border border-white/[0.08] hover:border-white/[0.14] transition-all duration-300 overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/10 rounded-full blur-2xl pointer-events-none transition-all duration-300" />
+
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 font-bold text-xs shadow-inner">
+                  <span className="text-purple-400 font-mono">v1</span>
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white tracking-tight group-hover:text-purple-300 transition-colors">Scroll Mode</h3>
+                  <p className="text-[10px] font-mono text-white/50">Universal Web Positioning</p>
+                </div>
+              </div>
+              <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-300">
+                Any Webpage
+              </span>
             </div>
-            <div>
-              <p className="text-xs font-semibold text-white/90 group-hover:text-white transition-colors">Scroll Mode (Any Website)</p>
-              <p className="text-[11px] text-white/50">Exact pixel-accurate checkpoints on docs, articles, and repos.</p>
+
+            <p className="text-xs text-white/60 leading-relaxed mb-5">
+              Pixel-accurate position bookmarking for documentation, technical blogs, API reference guides, and GitHub code files.
+            </p>
+
+            {/* Micro UI Demonstration Badge */}
+            <div className="p-3 rounded-xl bg-black/50 border border-white/[0.08] space-y-2 font-mono text-[10px]">
+              <div className="flex items-center justify-between text-white/40 pb-1.5 border-b border-white/[0.06]">
+                <span>Scroll Coordinate</span>
+                <span className="text-purple-300 font-semibold">Y: 1,480 px</span>
+              </div>
+              <div className="flex items-center justify-between text-white/80">
+                <span className="truncate max-w-[200px] text-emerald-300">"docs.stripe.com/api#webhooks"</span>
+                <span className="text-[9px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">Exact Pin</span>
+              </div>
             </div>
           </div>
         </div>

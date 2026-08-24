@@ -97,13 +97,11 @@
   }
 
   .apple-glass-hover {
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .apple-glass-hover:hover {
-    background: rgba(30, 34, 50, 0.8);
-    border-color: rgba(59, 130, 246, 0.3);
-    box-shadow: 0 12px 40px 0 rgba(37, 99, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.14);
   }
 
   .text-glow {
